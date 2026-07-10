@@ -1,0 +1,254 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FIVEFOLD — Room III · Doctrine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --ink:#0A0A0A;
+  --paper:#F2F2F0;
+  --acc:#FF4D00;
+  --rule:rgba(10,10,10,.18);
+  --ff-nav-bg:rgba(10,10,10,.82);
+  --ff-nav-fg:#F2F2F0;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"Space Mono",ui-monospace,monospace;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1400px;margin:0 auto;padding:0 clamp(14px,4vw,56px)}
+
+/* progress bar */
+.progress{
+  position:fixed;top:0;left:0;height:4px;width:0%;
+  background:var(--acc);z-index:1000;
+  transition:width .08s linear;
+}
+.readout{
+  position:fixed;top:12px;right:14px;z-index:1000;
+  font-size:12px;font-weight:700;letter-spacing:.12em;
+  background:var(--ink);color:var(--paper);
+  padding:6px 9px;border-radius:2px;
+  font-variant-numeric:tabular-nums;
+}
+.readout .lab{color:var(--acc)}
+
+/* header / poster masthead */
+header{border-bottom:2px solid var(--ink);padding-top:clamp(48px,9vh,120px);padding-bottom:clamp(20px,4vh,44px)}
+.eyebrow{
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;
+  font-size:clamp(11px,1.4vw,13px);font-weight:700;
+  letter-spacing:.24em;text-transform:uppercase;margin-bottom:clamp(20px,5vh,54px)
+}
+.eyebrow .acc{color:var(--acc)}
+h1{
+  font-family:"Anton",Impact,sans-serif;font-weight:400;
+  text-transform:uppercase;line-height:.82;letter-spacing:-.01em;
+  font-size:clamp(58px,17vw,248px);
+  word-break:break-word;
+}
+h1 .db{color:var(--paper);-webkit-text-stroke:2px var(--ink);text-stroke:2px var(--ink)}
+.sub{
+  margin-top:clamp(16px,3vh,30px);
+  font-size:clamp(13px,1.7vw,18px);max-width:46ch;line-height:1.5;
+}
+.sub b{color:var(--acc)}
+
+/* marquee */
+.marquee{
+  overflow:hidden;white-space:nowrap;border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);
+  background:var(--ink);color:var(--paper);
+  padding:10px 0;margin-top:clamp(28px,6vh,64px);
+}
+.marquee ul{display:inline-flex;list-style:none;padding-left:0;animation:ticker 26s linear infinite}
+.marquee li{
+  font-family:"Anton",Impact,sans-serif;text-transform:uppercase;
+  font-size:clamp(18px,3vw,34px);letter-spacing:.02em;padding:0 clamp(18px,3vw,40px);
+}
+.marquee li .dot{color:var(--acc)}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* doctrine grid */
+.doctrines{border-bottom:2px solid var(--ink)}
+.doc{
+  border-top:1px solid var(--rule);
+  cursor:pointer;position:relative;
+  transition:background .18s ease,color .18s ease;
+  outline:none;
+}
+.doctrines .doc:first-child{border-top:none}
+.doc:hover,.doc:focus-visible{background:var(--ink);color:var(--paper)}
+.doc:hover .num,.doc:focus-visible .num{color:var(--acc)}
+.doc:hover .rule-v,.doc:focus-visible .rule-v{background:rgba(242,242,240,.22)}
+.doc:focus-visible{box-shadow:inset 0 0 0 3px var(--acc)}
+
+.doc-head{
+  display:grid;grid-template-columns:auto 1fr auto;align-items:center;
+  gap:clamp(12px,3vw,40px);
+  padding:clamp(16px,3.2vh,34px) 0;
+}
+.num{
+  font-family:"Anton",Impact,sans-serif;color:var(--ink);
+  font-size:clamp(40px,9vw,120px);line-height:.8;
+  font-variant-numeric:tabular-nums;transition:color .18s ease;
+  min-width:1.6ch;
+}
+.title{
+  font-family:"Anton",Impact,sans-serif;text-transform:uppercase;
+  font-size:clamp(24px,5.6vw,74px);line-height:.9;letter-spacing:-.005em;
+}
+.plus{
+  font-family:"Anton",sans-serif;font-size:clamp(22px,3.4vw,40px);line-height:1;
+  transition:transform .22s ease;justify-self:end;
+}
+.doc[aria-expanded="true"] .plus{transform:rotate(45deg);color:var(--acc)}
+
+/* expanding defense */
+.defense{
+  display:grid;grid-template-rows:0fr;
+  transition:grid-template-rows .28s cubic-bezier(.2,.8,.2,1);
+}
+.doc[aria-expanded="true"] .defense{grid-template-rows:1fr}
+.defense-inner{overflow:hidden}
+.defense p{
+  max-width:60ch;font-size:clamp(13px,1.7vw,19px);line-height:1.55;
+  padding:0 0 clamp(20px,3.4vh,36px) 0;
+}
+.defense .lede{display:block;color:var(--acc);font-weight:700;margin-bottom:6px}
+.doc:hover .defense .lede,.doc:focus-visible .defense .lede{color:var(--acc)}
+
+/* footer */
+footer{
+  padding:clamp(30px,7vh,80px) 0 clamp(90px,12vh,140px);
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;align-items:baseline;
+}
+.footer-mark{font-family:"Anton",sans-serif;text-transform:uppercase;font-size:clamp(20px,3vw,38px);letter-spacing:.01em}
+.footer-mark .r{color:var(--acc)}
+.footer-credo{font-size:clamp(12px,1.5vw,15px);max-width:40ch;line-height:1.5;opacity:.85}
+
+@media (prefers-reduced-motion:reduce){
+  .marquee ul{animation:none}
+  .progress,.plus,.defense,.doc,.num{transition:none}
+}
+
+/* nav (snippet-owned styles below) */
+</style>
+
+<div class="progress" id="progress" aria-hidden="true"></div>
+<div class="readout" aria-hidden="true"><span class="lab">READ</span> <span id="pct">00</span>%</div>
+
+<header>
+  <div class="wrap">
+    <div class="eyebrow">
+      <span>FIVEFOLD DESIGN STUDIO</span>
+      <span class="acc">ROOM III / DOCTRINE</span>
+      <span>TEN LAWS · NO FILLER</span>
+    </div>
+    <h1>ORNAMENT<br>IS <span class="db">DEBT</span>.</h1>
+    <p class="sub">The studio operating manual, published in full. Ten laws we design by — <b>every one defensible, click any to read the defense.</b></p>
+  </div>
+</header>
+
+<div class="marquee" aria-hidden="true">
+  <ul id="ticker">
+    <li>FORM IS ARGUMENT <span class="dot">/</span> EVERY PIXEL DEFENDS ITSELF <span class="dot">/</span></li>
+    <li>FORM IS ARGUMENT <span class="dot">/</span> EVERY PIXEL DEFENDS ITSELF <span class="dot">/</span></li>
+  </ul>
+</div>
+
+<main class="doctrines wrap" id="doctrines" aria-label="Ten doctrines"></main>
+
+<footer class="wrap">
+  <div class="footer-mark">FIVEFOLD <span class="r">— ROOM III OF V</span></div>
+  <p class="footer-credo">Nothing on this page is here by accident. If it could be removed and nothing broke, it already would be.</p>
+</footer>
+
+<nav class="ff-nav" dir="ltr" aria-label="Fivefold rooms">
+  <a href="evidence.html" aria-label="Previous room">&#8592;</a>
+  <a href="index.html" class="ff-home">FIVEFOLD &middot; 3/5</a>
+  <a href="ivrit.html" aria-label="Next room">&#8594;</a>
+</nav>
+<style>
+.ff-nav{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:999;display:flex;align-items:center;gap:2px;padding:6px 10px;border-radius:999px;background:var(--ff-nav-bg,rgba(20,20,20,.72));color:var(--ff-nav-fg,#fff);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);font:500 13px/1 system-ui,sans-serif;letter-spacing:.08em}
+.ff-nav a{color:inherit;text-decoration:none;padding:6px 10px;border-radius:999px;opacity:.85}
+.ff-nav a:hover{opacity:1;background:rgba(255,255,255,.12)}
+</style>
+
+<script>
+(function(){
+  "use strict";
+  var DOCTRINES=[
+    ["01","Ornament is debt","Every decoration is a payment deferred, not avoided.","What impresses today, someone loads, maintains, and explains forever."],
+    ["02","The grid is honest","Alignment is not taste — it is proof the layout has a system.","A visible rule admits the structure that weaker work hides."],
+    ["03","Speed is a feature","A page that arrives late has already lost the argument.","Performance is the first impression no redesign ever recovers."],
+    ["04","Contrast is kindness","Legibility is the minimum respect you owe a reader.","Low contrast is a designer flattering themselves at the audience's expense."],
+    ["05","Defaults are decisions","The setting you never changed is still a choice you made.","Ship nothing you can't defend — including what you left untouched."],
+    ["06","Constraint is the brief","A blank canvas is not freedom; it is a missing question.","Limits are where the real work starts, not where it stops."],
+    ["07","Hierarchy before color","If it only works in full color, it does not work.","Structure must survive grayscale, or it was never structure."],
+    ["08","Whitespace is not empty","Space is the loudest element on the page.","What you leave out directs the eye more than what you put in."],
+    ["09","Motion must mean something","An animation without a reason is a delay with a budget.","Movement should explain the interface, never merely entertain."],
+    ["10","Delete first, then design","The strongest edit you own is subtraction.","Every element earns its place or leaves — there is no neutral clutter."]
+  ];
+
+  var root=document.getElementById("doctrines");
+  DOCTRINES.forEach(function(d,i){
+    var sec=document.createElement("section");
+    sec.className="doc";
+    sec.setAttribute("role","button");
+    sec.setAttribute("tabindex","0");
+    sec.setAttribute("aria-expanded","false");
+    var id="def-"+d[0];
+    sec.innerHTML=
+      '<div class="doc-head">'+
+        '<span class="num">'+d[0]+'</span>'+
+        '<h2 class="title">'+d[1]+'</h2>'+
+        '<span class="plus" aria-hidden="true">+</span>'+
+      '</div>'+
+      '<div class="defense" id="'+id+'"><div class="defense-inner"><p>'+
+        '<span class="lede">'+d[2]+'</span>'+d[3]+
+      '</p></div></div>';
+    sec.setAttribute("aria-controls",id);
+    root.appendChild(sec);
+
+    function toggle(){
+      var open=sec.getAttribute("aria-expanded")==="true";
+      sec.setAttribute("aria-expanded",open?"false":"true");
+    }
+    sec.addEventListener("click",toggle);
+    sec.addEventListener("keydown",function(e){
+      if(e.key==="Enter"||e.key===" "||e.key==="Spacebar"){e.preventDefault();toggle();}
+    });
+  });
+
+  // scroll-driven read counter
+  var reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion:reduce)").matches;
+  var bar=document.getElementById("progress");
+  var pct=document.getElementById("pct");
+  if(!reduce){
+    var raf=false;
+    function update(){
+      raf=false;
+      var doc=document.documentElement;
+      var max=doc.scrollHeight-doc.clientHeight;
+      var p=max>0?Math.min(100,Math.max(0,(doc.scrollTop||window.pageYOffset)/max*100)):100;
+      bar.style.width=p+"%";
+      pct.textContent=(p<10?"0":"")+Math.round(p);
+    }
+    window.addEventListener("scroll",function(){
+      if(!raf){raf=true;window.requestAnimationFrame(update);}
+    },{passive:true});
+    window.addEventListener("resize",update);
+    update();
+  }else{
+    bar.style.width="100%";
+    pct.textContent="100";
+  }
+})();
+</script>

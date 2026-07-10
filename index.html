@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FIVEFOLD — One studio, five doctrines</title>
+<meta name="description" content="FIVEFOLD is a capability showcase: five rooms, five opposing design doctrines, one studio. Three in English, two in Hebrew.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>&#x2B1F;</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&family=Archivo+Black&family=Frank+Ruhl+Libre:wght@400;700&family=Heebo:wght@400;500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#070707; --fg:#EDEDEA; --hair:rgba(237,237,234,.14);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{
+  background:var(--bg); color:var(--fg);
+  font-family:"Space Grotesk",system-ui,sans-serif;
+  display:flex; flex-direction:column; min-height:100vh;
+}
+/* ---------- header ---------- */
+header{
+  padding:clamp(20px,4vh,44px) clamp(20px,5vw,64px) clamp(14px,2.5vh,28px);
+  display:flex; flex-wrap:wrap; align-items:baseline; gap:10px 28px;
+  border-bottom:1px solid var(--hair);
+}
+.wordmark{
+  font-weight:700; letter-spacing:-.03em;
+  font-size:clamp(34px,6vw,72px); line-height:.95;
+}
+.wordmark .fold{color:transparent;-webkit-text-stroke:1.5px var(--fg)}
+.taglines{margin-inline-start:auto; text-align:right; font-size:clamp(12px,1.3vw,15px); line-height:1.55; opacity:.72}
+.taglines .he{font-family:"Heebo",sans-serif; direction:rtl}
+/* ---------- doors ---------- */
+main{flex:1; display:flex; flex-direction:column; min-height:0}
+.door{
+  position:relative; flex:1 1 0; min-height:88px;
+  display:flex; align-items:center; gap:clamp(14px,3vw,40px);
+  padding:0 clamp(20px,5vw,64px);
+  text-decoration:none; overflow:hidden;
+  background:var(--d-bg); color:var(--d-fg);
+  border-bottom:1px solid var(--hair);
+  transition:flex-grow .45s cubic-bezier(.22,.8,.24,1), background-color .3s;
+}
+.door:last-of-type{border-bottom:none}
+.door:hover,.door:focus-visible{flex-grow:2.1; outline:none}
+.door:focus-visible{box-shadow:inset 0 0 0 2px var(--d-acc)}
+.door .num{
+  font-family:"JetBrains Mono",monospace; font-size:clamp(11px,1.1vw,13px);
+  letter-spacing:.22em; opacity:.55; width:4.5ch; flex:none;
+}
+.door .title{
+  font-size:clamp(26px,4.6vw,58px); line-height:1; letter-spacing:-.02em; font-weight:700;
+  flex:none;
+}
+.door .meta{
+  margin-inline-start:auto; text-align:end; min-width:0;
+}
+.door .credo{
+  font-size:clamp(12px,1.35vw,16px); line-height:1.45; opacity:0;
+  transform:translateY(6px);
+  transition:opacity .35s .08s, transform .35s .08s;
+  max-width:34ch;
+}
+.door .enter{
+  display:inline-block; margin-top:8px;
+  font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:.24em;
+  color:var(--d-acc); opacity:.9;
+}
+.door:hover .credo,.door:focus-visible .credo{opacity:.85; transform:none}
+.door .edge{
+  position:absolute; inset-inline-start:0; top:0; bottom:0; width:4px;
+  background:var(--d-acc); transform:scaleY(0);
+  transition:transform .35s cubic-bezier(.22,.8,.24,1); transform-origin:top;
+}
+.door:hover .edge,.door:focus-visible .edge{transform:scaleY(1)}
+/* room palettes + type voices */
+.d1{--d-bg:#050505; --d-fg:#EDEDEA; --d-acc:#4D7CFE}
+.d1 .title{font-family:"Space Grotesk",sans-serif}
+.d2{--d-bg:#FAF7F2; --d-fg:#1A1A18; --d-acc:#D33F2E}
+.d2 .title{font-family:"Newsreader",serif; font-weight:400; font-style:italic}
+.d2 .num{opacity:.45}
+.d3{--d-bg:#0A0A0A; --d-fg:#F2F2F0; --d-acc:#FF4D00}
+.d3 .title{font-family:"Archivo Black",sans-serif; font-weight:400; text-transform:uppercase}
+.d4{--d-bg:#F6F1E7; --d-fg:#241F1C; --d-acc:#A03232}
+.d4 .title{font-family:"Frank Ruhl Libre",serif}
+.d4 .credo{font-family:"Frank Ruhl Libre",serif}
+.d5{--d-bg:#0B0E14; --d-fg:#E8FFF6; --d-acc:#59FFC6}
+.d5 .title{font-family:"Heebo",sans-serif; font-weight:500}
+.d5 .credo{font-family:"Heebo",sans-serif}
+.door[dir="rtl"] .meta{text-align:end}
+/* ---------- footer ---------- */
+footer{
+  padding:14px clamp(20px,5vw,64px);
+  display:flex; flex-wrap:wrap; gap:6px 24px; justify-content:space-between;
+  font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:.14em;
+  opacity:.5; border-top:1px solid var(--hair);
+}
+/* ---------- small screens ---------- */
+@media (max-width:640px){
+  .door{flex-direction:column; align-items:flex-start; justify-content:center; gap:6px; padding-top:16px; padding-bottom:16px}
+  .door[dir="rtl"]{align-items:flex-start}
+  .door .meta{margin-inline-start:0; text-align:start}
+  .door .credo{opacity:.75; transform:none; transition:none}
+  .taglines{margin-inline-start:0; text-align:left}
+  .taglines .he{text-align:right}
+}
+@media (prefers-reduced-motion:reduce){
+  .door,.door .credo,.door .edge{transition:none}
+  .door:hover,.door:focus-visible{flex-grow:1.4}
+}
+</style>
+</head>
+<body>
+<header>
+  <h1 class="wordmark">FIVE<span class="fold">FOLD</span></h1>
+  <div class="taglines">
+    <div>One studio. Five doctrines. Every room disagrees with the last.</div>
+    <div class="he">סטודיו אחד. חמש תורות. כל חדר חולק על קודמו.</div>
+  </div>
+</header>
+
+<main aria-label="The five rooms">
+  <a class="door d1" href="kinetic.html">
+    <span class="edge" aria-hidden="true"></span>
+    <span class="num">RM·I</span>
+    <span class="title">KINETIC</span>
+    <span class="meta">
+      <span class="credo">Motion is the message. Typography with mass, spring and wind — push it and it pushes back.</span><br>
+      <span class="enter">ENTER &#8594;</span>
+    </span>
+  </a>
+  <a class="door d2" href="evidence.html">
+    <span class="edge" aria-hidden="true"></span>
+    <span class="num">RM·II</span>
+    <span class="title">Evidence</span>
+    <span class="meta">
+      <span class="credo">The page is an instrument. Every chart here measures this page, this session, this reader.</span><br>
+      <span class="enter">ENTER &#8594;</span>
+    </span>
+  </a>
+  <a class="door d3" href="manifesto.html">
+    <span class="edge" aria-hidden="true"></span>
+    <span class="num">RM·III</span>
+    <span class="title">Doctrine</span>
+    <span class="meta">
+      <span class="credo">Ornament is debt. Ten principles set in poster type, on a grid that hides nothing.</span><br>
+      <span class="enter">ENTER &#8594;</span>
+    </span>
+  </a>
+  <a class="door d4" href="ivrit.html" dir="rtl" lang="he">
+    <span class="edge" aria-hidden="true"></span>
+    <span class="num" dir="ltr">RM·IV</span>
+    <span class="title">כתב</span>
+    <span class="meta">
+      <span class="credo">שלושת אלפים שנה של אות עברית — קלף, דיו, וימין־לשמאל כציר של קומפוזיציה.</span><br>
+      <span class="enter" dir="ltr">&#8592; כניסה</span>
+    </span>
+  </a>
+  <a class="door d5" href="maabada.html" dir="rtl" lang="he">
+    <span class="edge" aria-hidden="true"></span>
+    <span class="num" dir="ltr">RM·V</span>
+    <span class="title">מעבדה</span>
+    <span class="meta">
+      <span class="credo">משחק הוא שיטה. שלושה שולחנות ניסוי: פיזיקה של אותיות, מטוטלות, וצבע חי.</span><br>
+      <span class="enter" dir="ltr">&#8592; כניסה</span>
+    </span>
+  </a>
+</main>
+
+<footer>
+  <span>FIVEFOLD &mdash; A CAPABILITY SHOWCASE IN FIVE ROOMS</span>
+  <span>EN &times;3 &nbsp;&middot;&nbsp; HE &times;2 &nbsp;&middot;&nbsp; KEYS 1&ndash;5</span>
+</footer>
+
+<script>
+// keys 1-5 open rooms; arrows move focus through the doors
+(function(){
+  var doors=[].slice.call(document.querySelectorAll('.door'));
+  var pages=['kinetic.html','evidence.html','manifesto.html','ivrit.html','maabada.html'];
+  document.addEventListener('keydown',function(e){
+    if(e.target.tagName==='INPUT')return;
+    var n=parseInt(e.key,10);
+    if(n>=1&&n<=5){location.href=pages[n-1];return}
+    var i=doors.indexOf(document.activeElement);
+    if(e.key==='ArrowDown'||e.key==='ArrowRight'){e.preventDefault();doors[Math.min(doors.length-1,i+1)].focus()}
+    if(e.key==='ArrowUp'||e.key==='ArrowLeft'){e.preventDefault();doors[Math.max(0,i-1)].focus()}
+  });
+})();
+</script>
+</body>
+</html>

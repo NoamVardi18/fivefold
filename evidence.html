@@ -1,0 +1,648 @@
+<title>FIVEFOLD &middot; Room II: Evidence</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23FAF7F2'/%3E%3Crect x='3' y='11' width='2' height='2' fill='%23D33F2E'/%3E%3Crect x='7' y='7' width='2' height='6' fill='%231A1A18'/%3E%3Crect x='11' y='4' width='2' height='9' fill='%231A1A18'/%3E%3C/svg%3E">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --paper:#FAF7F2;
+    --ink:#1A1A18;
+    --accent:#D33F2E;
+    --ink-40:rgba(26,26,24,.40);
+    --ink-15:rgba(26,26,24,.15);
+    --ink-08:rgba(26,26,24,.08);
+    --ff-nav-bg:rgba(26,26,24,.82);
+    --ff-nav-fg:#FAF7F2;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Newsreader",Georgia,serif;
+    font-size:19px;
+    line-height:1.62;
+    font-weight:400;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  .mono{font-family:"JetBrains Mono",ui-monospace,monospace}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+  .layout{display:grid;grid-template-columns:minmax(0,1fr);gap:0}
+  @media(min-width:1000px){
+    .layout{grid-template-columns:minmax(0,1fr) 220px;gap:56px;align-items:start}
+  }
+
+  header.masthead{padding:88px 0 40px;border-bottom:1px solid var(--ink-15)}
+  .kicker{
+    font-family:"JetBrains Mono",monospace;
+    font-size:12px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--accent);margin:0 0 22px;font-weight:500;
+  }
+  h1{
+    font-weight:600;font-size:clamp(38px,7vw,72px);line-height:1.02;
+    letter-spacing:-.02em;margin:0 0 20px;max-width:14ch;
+  }
+  h1 em{font-style:italic;color:var(--accent);font-weight:500}
+  .standfirst{font-size:clamp(19px,2.4vw,22px);max-width:40ch;color:var(--ink);margin:0}
+  .standfirst .lede{font-variant:small-caps;letter-spacing:.02em;font-weight:500}
+
+  article{padding:44px 0 0}
+  section{padding:44px 0;border-top:1px solid var(--ink-15)}
+  section:first-of-type{border-top:none}
+  .sec-num{
+    font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.18em;
+    color:var(--ink-40);text-transform:uppercase;display:block;margin:0 0 10px;
+  }
+  h2{font-weight:600;font-size:clamp(26px,4vw,36px);line-height:1.1;letter-spacing:-.015em;margin:0 0 20px;max-width:20ch}
+  h2 em{font-style:italic;font-weight:500}
+  p{margin:0 0 20px;max-width:64ch}
+  p.wide{max-width:68ch}
+  .drop::first-letter{
+    font-size:3.1em;line-height:.82;float:left;padding:.06em .10em 0 0;
+    font-weight:600;color:var(--accent);font-style:normal;
+  }
+  a.cite{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--ink-15)}
+  em.term{font-style:italic}
+
+  figure{margin:34px 0 12px}
+  figcaption{
+    font-family:"JetBrains Mono",monospace;font-size:12.5px;line-height:1.5;
+    color:var(--ink-40);margin-top:16px;max-width:60ch;letter-spacing:.01em;
+  }
+  figcaption b{color:var(--ink);font-weight:500}
+  .fignum{color:var(--accent)}
+
+  /* charts */
+  .chart-frame{width:100%;overflow-x:auto;overflow-y:hidden}
+  svg{display:block;max-width:100%}
+  text{font-family:"JetBrains Mono",monospace}
+
+  /* reading test */
+  .instrument{
+    border:1px solid var(--ink-15);border-radius:2px;background:rgba(255,255,255,.35);
+    padding:22px 22px 24px;margin:30px 0 12px;
+  }
+  .passage{
+    font-size:20px;line-height:1.66;max-width:58ch;margin:0 0 22px;
+    padding:0 0 0 18px;border-left:2px solid var(--accent);color:var(--ink);
+  }
+  .passage.hidden-blur{filter:blur(4px);user-select:none;opacity:.5}
+  .btnrow{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+  button{
+    font-family:"JetBrains Mono",monospace;font-size:13px;letter-spacing:.06em;
+    text-transform:uppercase;padding:11px 20px;border-radius:2px;cursor:pointer;
+    border:1px solid var(--ink);background:var(--ink);color:var(--paper);
+    transition:background .15s,color .15s,opacity .15s;
+  }
+  button.ghost{background:transparent;color:var(--ink)}
+  button:hover:not(:disabled){background:var(--accent);border-color:var(--accent);color:#fff}
+  button:disabled{opacity:.32;cursor:not-allowed}
+  .verdict{
+    font-family:"JetBrains Mono",monospace;font-size:13px;color:var(--ink-40);
+    margin-top:16px;min-height:1.4em;
+  }
+  .verdict b{color:var(--accent);font-size:15px}
+
+  /* marginal instrument */
+  aside.margin-rail{font-family:"JetBrains Mono",monospace}
+  @media(min-width:1000px){
+    aside.margin-rail{position:sticky;top:34px}
+  }
+  .rail-card{
+    border:1px solid var(--ink-15);border-radius:2px;padding:16px 16px 18px;
+    margin-bottom:20px;background:rgba(255,255,255,.35);
+  }
+  .rail-label{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0 0 4px}
+  .rail-sub{font-size:10px;letter-spacing:.04em;color:var(--ink-40);margin:0 0 12px;line-height:1.45}
+  .rail-read{font-size:11px;color:var(--ink-40);letter-spacing:.02em}
+  .rail-read b{color:var(--ink)}
+  .dwell-row{display:flex;align-items:flex-end;gap:2px;justify-content:space-between;height:44px;margin:4px 0 8px}
+  .dwell-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px}
+  .dwell-bar{width:100%;max-width:16px;background:var(--accent);height:2px;border-radius:1px 1px 0 0}
+  .dwell-tag{font-size:9px;color:var(--ink-40)}
+  @media(min-width:1000px){.rail-mobile-note{display:none}}
+  .rail-mobile-note{font-size:11px;color:var(--ink-40);margin-top:6px}
+
+  footer.strip{
+    border-top:1px solid var(--ink-15);margin-top:36px;padding:34px 0 96px;
+    display:flex;flex-wrap:wrap;gap:12px 28px;align-items:baseline;justify-content:space-between;
+    font-family:"JetBrains Mono",monospace;font-size:12.5px;color:var(--ink-40);letter-spacing:.04em;
+  }
+  footer.strip b{color:var(--ink);font-weight:500}
+  footer.strip .credo{max-width:44ch;font-style:normal}
+
+  @media(prefers-reduced-motion:reduce){
+    *{scroll-behavior:auto!important}
+  }
+
+  /* nav (snippet-owned styles below; only vars tuned above) */
+  .ff-nav{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:999;display:flex;align-items:center;gap:2px;padding:6px 10px;border-radius:999px;background:var(--ff-nav-bg,rgba(20,20,20,.72));color:var(--ff-nav-fg,#fff);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);font:500 13px/1 system-ui,sans-serif;letter-spacing:.08em}
+  .ff-nav a{color:inherit;text-decoration:none;padding:6px 10px;border-radius:999px;opacity:.85}
+  .ff-nav a:hover{opacity:1;background:rgba(255,255,255,.12)}
+</style>
+
+<div class="wrap">
+  <header class="masthead">
+    <p class="kicker">Fivefold &middot; Room II of V &middot; Evidence</p>
+    <h1>The page is an <em>instrument.</em></h1>
+    <p class="standfirst"><span class="lede">A design claim that cannot be measured</span> is a matter of taste wearing the costume of a fact. This essay measures itself, and it measures you, as you read it.</p>
+  </header>
+
+  <div class="layout">
+    <article id="essay">
+
+      <!-- a. Opening argument -->
+      <section id="s-open">
+        <span class="sec-num">§0 &middot; The argument</span>
+        <p class="drop wide">Most writing about design asks for belief. It says a thing feels balanced, reads cleanly, sits well on the page &mdash; and then moves on before you can ask how anyone would know. We take a narrower position: a claim worth making about a page is a claim you can check against the page. Not a mood board, not an adjective, but a number that the artefact itself will produce on demand.</p>
+        <p class="wide">So this room withholds the usual flattery. Everything below is computed here, now, from this document and this reading session &mdash; the frequency of its own letters, the velocity of your scroll, the pace at which you read, the exact proportions of the type you are looking at. Nothing is stored, nothing is sent, nothing is staged. If a figure appears, it was measured a moment ago. That is the whole discipline: say only what the instrument can confirm, and let the reader watch it confirm it.</p>
+      </section>
+
+      <!-- b. The essay, counted -->
+      <section id="s-counted">
+        <span class="sec-num">§1 &middot; The essay, counted</span>
+        <h2>The essay, <em>counted</em></h2>
+        <p>A page is also a pile of letters, and the pile has a shape. Below is the letter frequency of every visible word in this document, tallied from the live page after it loaded. English leans hard on a handful of glyphs; you can see the lean. No legend, no gridlines &mdash; each bar simply carries its own letter and its own share.</p>
+        <figure>
+          <div class="chart-frame">
+            <svg id="freqChart" viewBox="0 0 720 300" role="img" aria-label="Bar chart of letter frequency in this page's visible text"></svg>
+          </div>
+          <figcaption>
+            <span class="fignum">Fig. 1</span> &mdash; Relative frequency of letters A&ndash;Z across the page's visible prose. Measured live from the DOM at load: <b id="charCountNote">counting&hellip;</b> Bars are direct-labelled with their percentage; the axis is the alphabet itself.
+          </figcaption>
+        </figure>
+      </section>
+
+      <!-- c. The reader, observed -->
+      <section id="s-observed">
+        <span class="sec-num">§2 &middot; The reader, observed</span>
+        <h2>The reader, <em>observed</em></h2>
+        <p>Reading is a physical act with a rhythm, and a page can feel it happen. In the margin is a live trace of this session: a sparkline of how fast you are scrolling, redrawn continuously, and a row of quiet ticks that grow the longer you dwell in each part of the essay. It is an honest little instrument &mdash; measured in this session, plotted on this screen, and stored precisely nowhere. Close the tab and every mark of it is gone.</p>
+        <p class="wide">The point is not surveillance; it is symmetry. A page that measures its own letters should be willing to be measured back. Linger here and watch the second tick climb.</p>
+      </section>
+
+      <!-- d. Reading speed, measured -->
+      <section id="s-speed">
+        <span class="sec-num">§3 &middot; Reading speed, measured</span>
+        <h2>Reading speed, <em>measured</em></h2>
+        <p>Claims about legibility usually hide behind the word <em class="term">comfortable</em>. Here is a way to replace it with a rate. Press start, read the passage below once at your natural pace, and press done. The page divides words by elapsed time and places your result against the published range for adult prose reading &mdash; roughly <a class="cite" href="https://en.wikipedia.org/wiki/Words_per_minute#Reading_and_comprehension" target="_blank" rel="noopener">183&ndash;238&nbsp;words per minute</a>, cited here as an estimate, not a measurement of you.</p>
+
+        <div class="instrument">
+          <p class="passage hidden-blur" id="passage">A measured page keeps its own accounts. It does not ask you to trust its taste; it hands you the arithmetic and lets you check the sums. Every claim here is a number you can watch being made. Read this paragraph at your natural pace, neither rushing the words nor lingering on them, and the instrument will report the rate back to you.</p>
+          <div class="btnrow">
+            <button id="startBtn" type="button">Start reading</button>
+            <button id="doneBtn" class="ghost" type="button" disabled>I&#39;m done</button>
+            <button id="resetBtn" class="ghost" type="button" disabled>Reset</button>
+          </div>
+          <div class="verdict mono" id="wpmVerdict" aria-live="polite">The passage is blurred until you start.</div>
+          <figure style="margin:22px 0 0">
+            <div class="chart-frame">
+              <svg id="wpmStrip" viewBox="0 0 720 120" role="img" aria-label="Distribution strip of typical adult reading speeds with your measured result"></svg>
+            </div>
+            <figcaption>
+              <span class="fignum">Fig. 2</span> &mdash; A hand-drawn strip of the typical adult reading band (<b>183&ndash;238&nbsp;wpm</b>, published estimate). Your dot appears only after a completed run and is computed from <b id="wpmWordsNote">this passage's word count</b>.
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- e. The letters themselves, measured -->
+      <section id="s-letters">
+        <span class="sec-num">§4 &middot; The letters themselves, measured</span>
+        <h2>The letters themselves, <em>measured</em></h2>
+        <p>Type has anatomy, and the anatomy has ratios. The most telling is the x-height &mdash; how tall the lowercase body stands relative to the capitals &mdash; because it governs how large a face reads at a given point size. We asked the browser to render this very serif into a canvas and measure it: the numbers below are the true metrics of the font on your screen, not a specimen sheet's promise.</p>
+        <figure>
+          <div class="chart-frame">
+            <svg id="anatomy" viewBox="0 0 720 300" role="img" aria-label="Type anatomy diagram drawn to the measured x-height and cap-height of this page's serif"></svg>
+          </div>
+          <figcaption>
+            <span class="fignum">Fig. 3</span> &mdash; The rendered serif, drawn to scale from canvas text metrics measured at runtime. Cap-height <b id="capNote">&mdash;</b>, x-height <b id="xNote">&mdash;</b>, ratio <b id="ratioNote">&mdash;</b> on this device.
+          </figcaption>
+        </figure>
+        <p style="margin-top:30px">Four measurements, one page, no assertions we could not check. That is the room: not the promise that a page is well made, but the arithmetic that lets you decide.</p>
+      </section>
+
+    </article>
+
+    <!-- marginal instrument -->
+    <aside class="margin-rail" aria-label="Live reading-session instrument">
+      <div class="rail-card">
+        <p class="rail-label">Scroll velocity</p>
+        <p class="rail-sub">This session only &middot; stored nowhere</p>
+        <div class="chart-frame">
+          <svg id="sparkline" viewBox="0 0 188 56" role="img" aria-label="Live sparkline of your scroll velocity"></svg>
+        </div>
+        <p class="rail-read">peak <b id="peakVel">0</b> px/s</p>
+      </div>
+      <div class="rail-card">
+        <p class="rail-label">Dwell per section</p>
+        <p class="rail-sub">Ticks grow while you linger</p>
+        <div class="dwell-row" id="dwellRow"></div>
+        <p class="rail-read">reading <b id="totalDwell">0s</b></p>
+        <p class="rail-mobile-note">Scroll the essay; the marks update live.</p>
+      </div>
+    </aside>
+  </div>
+
+  <footer class="strip">
+    <span><b>FIVEFOLD</b> &mdash; Room II of V</span>
+    <span class="credo">If we can&#39;t measure the claim, we don&#39;t make it.</span>
+  </footer>
+</div>
+
+<nav class="ff-nav" dir="ltr" aria-label="Fivefold rooms">
+  <a href="kinetic.html" aria-label="Previous room">&#8592;</a>
+  <a href="index.html" class="ff-home">FIVEFOLD &middot; 2/5</a>
+  <a href="manifesto.html" aria-label="Next room">&#8594;</a>
+</nav>
+
+<script>
+(function(){
+  "use strict";
+  var REDUCE = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var SVGNS = "http://www.w3.org/2000/svg";
+  var INK = "#1A1A18", ACCENT = "#D33F2E", INK40 = "rgba(26,26,24,0.40)", INK15 = "rgba(26,26,24,0.15)";
+
+  function el(name, attrs){
+    var e = document.createElementNS(SVGNS, name);
+    if(attrs){ for(var k in attrs){ e.setAttribute(k, attrs[k]); } }
+    return e;
+  }
+  function txt(node, s){ node.appendChild(document.createTextNode(s)); return node; }
+
+  /* ---------- b. Letter frequency ---------- */
+  function buildFrequency(){
+    var article = document.getElementById("essay");
+    var visible = article ? (article.innerText || article.textContent || "") : "";
+    var counts = {}, i, total = 0;
+    for(i=0;i<26;i++){ counts[String.fromCharCode(97+i)] = 0; }
+    var lower = visible.toLowerCase();
+    for(i=0;i<lower.length;i++){
+      var c = lower.charCodeAt(i);
+      if(c>=97 && c<=122){ counts[lower[i]]++; total++; }
+    }
+    document.getElementById("charCountNote").textContent =
+      visible.length.toLocaleString() + " characters, " + total.toLocaleString() + " letters.";
+
+    var svg = document.getElementById("freqChart");
+    var W = 720, H = 300, padL = 8, padR = 8, padT = 20, padB = 42;
+    var plotW = W - padL - padR, plotH = H - padT - padB;
+    var n = 26, gap = 5;
+    var barW = (plotW - gap*(n-1)) / n;
+    var maxPct = 0, letters = [];
+    for(i=0;i<26;i++){
+      var ch = String.fromCharCode(97+i);
+      var pct = total ? (counts[ch]/total*100) : 0;
+      if(pct>maxPct) maxPct = pct;
+      letters.push({ch:ch, pct:pct});
+    }
+    if(maxPct<=0) maxPct = 1;
+
+    // baseline
+    var base = padT + plotH;
+    var axis = el("line",{x1:padL,y1:base+0.5,x2:W-padR,y2:base+0.5,stroke:INK15,"stroke-width":1});
+    svg.appendChild(axis);
+
+    for(i=0;i<26;i++){
+      var d = letters[i];
+      var x = padL + i*(barW+gap);
+      var h = (d.pct/maxPct)*plotH;
+      var y = base - h;
+      var rect = el("rect",{
+        x:x.toFixed(2), y:REDUCE? y.toFixed(2):base, width:barW.toFixed(2),
+        height:REDUCE? h.toFixed(2):0, fill: d.pct===maxPct?ACCENT:INK,
+        "fill-opacity": d.pct===maxPct?"1":"0.86", rx:"1"
+      });
+      svg.appendChild(rect);
+      // letter label under axis
+      var lab = el("text",{x:(x+barW/2).toFixed(2), y:base+16, "text-anchor":"middle",
+        "font-size":"12", fill:INK40});
+      txt(lab, d.ch.toUpperCase());
+      svg.appendChild(lab);
+      // value label on top (direct labelling) — show for readable bars
+      if(d.pct>=1.2){
+        var vl = el("text",{x:(x+barW/2).toFixed(2), y:(y-6).toFixed(2), "text-anchor":"middle",
+          "font-size":"9.5", fill: d.pct===maxPct?ACCENT:INK40});
+        txt(vl, d.pct.toFixed(1));
+        vl.setAttribute("data-y", (y-6).toFixed(2));
+        svg.appendChild(vl);
+        if(!REDUCE){ vl.setAttribute("opacity","0"); vl.setAttribute("data-fade","1"); }
+      }
+      if(!REDUCE){
+        rect.setAttribute("data-y", y.toFixed(2));
+        rect.setAttribute("data-h", h.toFixed(2));
+      }
+    }
+
+    if(!REDUCE){
+      // entrance animation via requestAnimationFrame
+      var bars = svg.querySelectorAll('rect[data-h]');
+      var fades = svg.querySelectorAll('text[data-fade]');
+      var t0 = null, DUR = 700;
+      function ease(p){ return 1-Math.pow(1-p,3); }
+      function step(ts){
+        if(t0===null) t0=ts;
+        var p = Math.min(1,(ts-t0)/DUR), e = ease(p);
+        for(var j=0;j<bars.length;j++){
+          var b = bars[j], fy = parseFloat(b.getAttribute("data-y")), fh = parseFloat(b.getAttribute("data-h"));
+          b.setAttribute("height",(fh*e).toFixed(2));
+          b.setAttribute("y",(base-fh*e).toFixed(2));
+        }
+        if(p>0.55){ for(var f=0;f<fades.length;f++){ fades[f].setAttribute("opacity", Math.min(1,(p-0.55)/0.45).toFixed(2)); } }
+        if(p<1) requestAnimationFrame(step);
+        else { for(var f2=0;f2<fades.length;f2++){ fades[f2].setAttribute("opacity","1"); } }
+      }
+      requestAnimationFrame(step);
+    }
+  }
+
+  /* ---------- c. Scroll velocity sparkline + dwell ---------- */
+  function buildSession(){
+    var spark = document.getElementById("sparkline");
+    var SW = 188, SH = 56, buf = [], MAXPTS = 48;
+    var lastY = window.pageYOffset || 0, lastT = performance.now(), peak = 0;
+    var peakEl = document.getElementById("peakVel");
+    for(var z=0;z<MAXPTS;z++){ buf.push(0); }
+
+    // baseline
+    var baseLine = el("line",{x1:0,y1:SH-1,x2:SW,y2:SH-1,stroke:INK15,"stroke-width":1});
+    spark.appendChild(baseLine);
+    var poly = el("polyline",{fill:"none",stroke:ACCENT,"stroke-width":1.4,"stroke-linejoin":"round","stroke-linecap":"round"});
+    spark.appendChild(poly);
+    var head = el("circle",{r:1.8,fill:ACCENT});
+    spark.appendChild(head);
+
+    function sample(){
+      var now = performance.now();
+      var y = window.pageYOffset || document.documentElement.scrollTop || 0;
+      var dt = (now-lastT)/1000;
+      var vel = dt>0 ? Math.abs(y-lastY)/dt : 0;
+      lastY = y; lastT = now;
+      if(vel>peak){ peak = vel; peakEl.textContent = Math.round(peak); }
+      buf.push(vel); if(buf.length>MAXPTS) buf.shift();
+      draw();
+    }
+    function draw(){
+      var mx = 1;
+      for(var i=0;i<buf.length;i++){ if(buf[i]>mx) mx=buf[i]; }
+      var pts = [], stepX = SW/(MAXPTS-1);
+      for(var j=0;j<buf.length;j++){
+        var px = (j*stepX).toFixed(2);
+        var py = (SH-2 - (buf[j]/mx)*(SH-6)).toFixed(2);
+        pts.push(px+","+py);
+      }
+      poly.setAttribute("points", pts.join(" "));
+      var last = pts[pts.length-1].split(",");
+      head.setAttribute("cx", last[0]); head.setAttribute("cy", last[1]);
+    }
+    setInterval(sample, 140);
+
+    /* dwell */
+    var sections = [
+      {id:"s-open", tag:"0"},{id:"s-counted", tag:"1"},{id:"s-observed", tag:"2"},
+      {id:"s-speed", tag:"3"},{id:"s-letters", tag:"4"}
+    ];
+    var dwell = {}, visible = {};
+    sections.forEach(function(s){ dwell[s.id]=0; visible[s.id]=false; });
+
+    var row = document.getElementById("dwellRow");
+    sections.forEach(function(s){
+      var item = document.createElement("div"); item.className="dwell-item";
+      var bar = document.createElement("div"); bar.className="dwell-bar"; bar.setAttribute("data-id",s.id);
+      var tag = document.createElement("div"); tag.className="dwell-tag"; tag.textContent="§"+s.tag;
+      item.appendChild(bar); item.appendChild(tag); row.appendChild(item);
+    });
+    var bars = {};
+    row.querySelectorAll(".dwell-bar").forEach(function(b){ bars[b.getAttribute("data-id")]=b; });
+
+    function markVisible(id, v){ visible[id]=v; }
+    if("IntersectionObserver" in window){
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){ markVisible(e.target.id, e.isIntersecting && e.intersectionRatio>0.12); });
+      }, {threshold:[0,0.12,0.5]});
+      sections.forEach(function(s){ var n=document.getElementById(s.id); if(n) io.observe(n); });
+    } else {
+      // fallback: rect overlap check on the same accumulator tick
+      visible.__fallback = true;
+    }
+
+    var accLast = performance.now();
+    function accumulate(){
+      var now = performance.now(), dt = now-accLast; accLast = now;
+      if(visible.__fallback){
+        var vh = window.innerHeight;
+        sections.forEach(function(s){
+          var n = document.getElementById(s.id); if(!n) return;
+          var r = n.getBoundingClientRect();
+          visible[s.id] = r.top < vh*0.75 && r.bottom > vh*0.25;
+        });
+      }
+      var maxD = 1;
+      sections.forEach(function(s){ if(visible[s.id]) dwell[s.id]+=dt; if(dwell[s.id]>maxD) maxD=dwell[s.id]; });
+      var total = 0;
+      sections.forEach(function(s){
+        total += dwell[s.id];
+        var h = 2 + (dwell[s.id]/maxD)*38;
+        bars[s.id].style.height = h.toFixed(1)+"px";
+      });
+      document.getElementById("totalDwell").textContent = Math.round(total/1000)+"s";
+    }
+    setInterval(accumulate, 250);
+  }
+
+  /* ---------- d. Reading speed test ---------- */
+  function buildSpeedTest(){
+    var passage = document.getElementById("passage");
+    var startBtn = document.getElementById("startBtn");
+    var doneBtn = document.getElementById("doneBtn");
+    var resetBtn = document.getElementById("resetBtn");
+    var verdict = document.getElementById("wpmVerdict");
+    var words = (passage.textContent.trim().match(/\S+/g)||[]).length;
+    document.getElementById("wpmWordsNote").textContent = words + " words, timed live";
+
+    var t0 = 0, running = false;
+    var LOW = 183, HIGH = 238; // published estimate band
+
+    function start(){
+      t0 = performance.now(); running = true;
+      passage.classList.remove("hidden-blur");
+      startBtn.disabled = true; doneBtn.disabled = false; resetBtn.disabled = false;
+      verdict.innerHTML = "Timing… read the passage, then press <b>done</b>.";
+    }
+    function done(){
+      if(!running) return;
+      running = false;
+      var elapsedMs = performance.now() - t0;
+      doneBtn.disabled = true;
+      var elapsedMin = elapsedMs/60000;
+      if(elapsedMs < 400 || elapsedMin <= 0){
+        verdict.innerHTML = "That was too fast to be a real read — press <b>reset</b> and try again.";
+        return;
+      }
+      var wpm = Math.round(words/elapsedMin);
+      var secs = (elapsedMs/1000).toFixed(1);
+      var where = wpm<LOW ? "below" : (wpm>HIGH ? "above" : "within");
+      verdict.innerHTML = "You read at <b>"+wpm+" wpm</b> ("+words+" words in "+secs+"s) — "+where+" the typical band.";
+      plotDot(wpm);
+    }
+    function reset(){
+      running = false; t0 = 0;
+      passage.classList.add("hidden-blur");
+      startBtn.disabled = false; doneBtn.disabled = true; resetBtn.disabled = true;
+      verdict.textContent = "The passage is blurred until you start.";
+      clearDot();
+    }
+    startBtn.addEventListener("click", start);
+    doneBtn.addEventListener("click", done);
+    resetBtn.addEventListener("click", reset);
+
+    /* distribution strip */
+    var svg = document.getElementById("wpmStrip");
+    var W=720,H=120, padL=48,padR=48, axisY=78;
+    var DMIN=90, DMAX=340; // wpm axis domain
+    function xFor(v){ var c=Math.max(DMIN,Math.min(DMAX,v)); return padL + (c-DMIN)/(DMAX-DMIN)*(W-padL-padR); }
+
+    // typical band shading
+    var bx1=xFor(LOW), bx2=xFor(HIGH);
+    svg.appendChild(el("rect",{x:bx1.toFixed(1),y:axisY-26,width:(bx2-bx1).toFixed(1),height:34,
+      fill:ACCENT,"fill-opacity":"0.10"}));
+    svg.appendChild(el("line",{x1:bx1.toFixed(1),y1:axisY-26,x2:bx1.toFixed(1),y2:axisY+8,stroke:ACCENT,"stroke-width":1,"stroke-dasharray":"2 3"}));
+    svg.appendChild(el("line",{x1:bx2.toFixed(1),y1:axisY-26,x2:bx2.toFixed(1),y2:axisY+8,stroke:ACCENT,"stroke-width":1,"stroke-dasharray":"2 3"}));
+    // axis line
+    svg.appendChild(el("line",{x1:padL,y1:axisY+8,x2:W-padR,y2:axisY+8,stroke:INK15,"stroke-width":1}));
+    // ticks
+    [120,160,200,240,280,320].forEach(function(v){
+      var x=xFor(v);
+      svg.appendChild(el("line",{x1:x.toFixed(1),y1:axisY+8,x2:x.toFixed(1),y2:axisY+13,stroke:INK40,"stroke-width":1}));
+      var t=el("text",{x:x.toFixed(1),y:axisY+26,"text-anchor":"middle","font-size":"11",fill:INK40}); txt(t,v); svg.appendChild(t);
+    });
+    // band label
+    var bl=el("text",{x:((bx1+bx2)/2).toFixed(1),y:axisY-32,"text-anchor":"middle","font-size":"10.5",fill:ACCENT});
+    txt(bl,"typical adult band · 183–238"); svg.appendChild(bl);
+    var axl=el("text",{x:W-padR,y:axisY+42,"text-anchor":"end","font-size":"10.5",fill:INK40});
+    txt(axl,"words per minute"); svg.appendChild(axl);
+
+    var dotGroup = el("g",{id:"wpmDot"}); svg.appendChild(dotGroup);
+    function clearDot(){ while(dotGroup.firstChild) dotGroup.removeChild(dotGroup.firstChild); }
+    function plotDot(wpm){
+      clearDot();
+      var x=xFor(wpm);
+      dotGroup.appendChild(el("line",{x1:x.toFixed(1),y1:axisY+8,x2:x.toFixed(1),y2:"22",stroke:INK,"stroke-width":1}));
+      dotGroup.appendChild(el("circle",{cx:x.toFixed(1),cy:"22",r:"5.5",fill:ACCENT,stroke:"#FAF7F2","stroke-width":"1.5"}));
+      var lab=el("text",{x:x.toFixed(1),y:"14","text-anchor":"middle","font-size":"12",fill:INK,"font-weight":"500"});
+      txt(lab, wpm+" — you"); dotGroup.appendChild(lab);
+    }
+  }
+
+  /* ---------- e. Type anatomy via canvas metrics ---------- */
+  function buildAnatomy(){
+    var svg = document.getElementById("anatomy");
+    var canvas = document.createElement("canvas");
+    var ctx = canvas.getContext("2d");
+    var FS = 200;
+    ctx.font = "400 "+FS+'px "Newsreader", Georgia, serif';
+    ctx.textBaseline = "alphabetic";
+
+    function metricHeight(chArr){
+      var best = 0;
+      for(var i=0;i<chArr.length;i++){
+        var m = ctx.measureText(chArr[i]);
+        var h = (m.actualBoundingBoxAscent||0);
+        if(h>best) best=h;
+      }
+      return best;
+    }
+    var capH = metricHeight(["H"]);
+    var xH   = metricHeight(["x"]);
+    var ascH = metricHeight(["h","d","k"]);
+    // guard
+    if(!capH || !xH){
+      document.getElementById("capNote").textContent="unavailable";
+      document.getElementById("xNote").textContent="unavailable";
+      document.getElementById("ratioNote").textContent="—";
+      // still draw a nominal diagram so the figure isn't blank
+      capH = capH || 140; xH = xH || 96; ascH = ascH || capH;
+    } else {
+      var ratio = xH/capH;
+      document.getElementById("capNote").textContent = (capH/FS).toFixed(3)+" em";
+      document.getElementById("xNote").textContent = (xH/FS).toFixed(3)+" em";
+      document.getElementById("ratioNote").textContent = ratio.toFixed(3)+" (x/cap)";
+    }
+
+    // draw to scale: map cap-height to a fixed pixel band
+    var W=720, H=300;
+    var drawCap = 150;                 // px for cap-height in the diagram
+    var scale = drawCap/capH;
+    var baseline = 232;
+    var capY = baseline - capH*scale;
+    var xY   = baseline - xH*scale;
+    var ascY = baseline - ascH*scale;
+    var textX = 70, lineRight = 470;
+
+    function guide(y, label, color){
+      svg.appendChild(el("line",{x1:textX,y1:y.toFixed(1),x2:lineRight,y2:y.toFixed(1),
+        stroke:color,"stroke-width":1,"stroke-dasharray": color===ACCENT?"none":"2 4","stroke-opacity": color===ACCENT?"0.9":"0.55"}));
+      // callout tick to the right
+      svg.appendChild(el("line",{x1:lineRight,y1:y.toFixed(1),x2:lineRight+14,y2:y.toFixed(1),stroke:color,"stroke-width":1,"stroke-opacity":"0.7"}));
+      var t=el("text",{x:lineRight+22,y:(y+4).toFixed(1),"font-size":"12.5",fill:color===ACCENT?ACCENT:INK40});
+      txt(t,label); svg.appendChild(t);
+    }
+    // reference lines
+    guide(baseline, "baseline", INK40);
+    guide(xY, "x-height · "+((xH/FS)).toFixed(3)+" em", ACCENT);
+    guide(capY, "cap-height · "+((capH/FS)).toFixed(3)+" em", INK40);
+    if(ascY < capY-1) guide(ascY, "ascender", INK40);
+
+    // the specimen glyphs, sized so their cap-height matches drawCap
+    var glyphFS = FS*scale;
+    var g = el("text",{x:textX, y:baseline.toFixed(1), "font-size":glyphFS.toFixed(1),
+      "font-family":'"Newsreader", Georgia, serif', "font-weight":"400", fill:INK});
+    g.appendChild(document.createTextNode("Hx"));
+    // measure width to place it; use canvas measure at glyphFS
+    ctx.font = "400 "+glyphFS+'px "Newsreader", Georgia, serif';
+    svg.appendChild(g);
+
+    // vertical ratio bracket between x-height and cap-height on the left
+    var bx = 44;
+    svg.appendChild(el("line",{x1:bx,y1:capY.toFixed(1),x2:bx,y2:baseline.toFixed(1),stroke:INK,"stroke-width":1}));
+    svg.appendChild(el("line",{x1:bx-4,y1:capY.toFixed(1),x2:bx+4,y2:capY.toFixed(1),stroke:INK,"stroke-width":1}));
+    svg.appendChild(el("line",{x1:bx-4,y1:xY.toFixed(1),x2:bx+4,y2:xY.toFixed(1),stroke:ACCENT,"stroke-width":1.4}));
+    svg.appendChild(el("line",{x1:bx-4,y1:baseline.toFixed(1),x2:bx+4,y2:baseline.toFixed(1),stroke:INK,"stroke-width":1}));
+
+    if(!REDUCE){
+      // fade glyph + guides in
+      [g].concat(Array.prototype.slice.call(svg.querySelectorAll("line,text"))).forEach(function(node){
+        node.style.opacity="0"; node.style.transition="opacity .5s ease";
+      });
+      requestAnimationFrame(function(){ requestAnimationFrame(function(){
+        svg.querySelectorAll("line,text").forEach(function(n){ n.style.opacity="1"; });
+        g.style.opacity="1";
+      });});
+    }
+  }
+
+  function init(){
+    try{ buildFrequency(); }catch(e){ /* leave figcaption note */ }
+    try{ buildSession(); }catch(e){}
+    try{ buildSpeedTest(); }catch(e){}
+    try{ buildAnatomy(); }catch(e){}
+  }
+
+  // Fonts must be ready before measuring letters + type metrics
+  if(document.fonts && document.fonts.ready){
+    document.fonts.ready.then(init).catch(init);
+    // safety: don't wait forever
+    setTimeout(function(){ if(!document.getElementById("freqChart").childNodes.length) init(); }, 2500);
+  } else {
+    window.addEventListener("load", init);
+  }
+})();
+</script>

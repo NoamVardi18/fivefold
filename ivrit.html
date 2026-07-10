@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>חדר רביעי · כתב — FIVEFOLD</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@300;400;500;700;900&family=David+Libre:wght@400;500;700&family=Heebo:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --parch:#F6F1E7;
+    --parch-2:#EFE8D8;
+    --ink:#241F1C;
+    --ink-soft:#5A524B;
+    --accent:#A03232;      /* deep pomegranate */
+    --accent-soft:#A0323222;
+    --rule:#241F1C1f;
+    --ff-nav-bg:rgba(36,31,28,.82);
+    --ff-nav-fg:#F6F1E7;
+    --maxw:44rem;
+  }
+
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  html{background:var(--parch);-webkit-text-size-adjust:100%}
+  body{
+    background:var(--parch);
+    color:var(--ink);
+    font-family:"Frank Ruhl Libre",Georgia,serif;
+    font-weight:400;
+    line-height:1.75;
+    font-size:clamp(17px,1.05rem + .3vw,20px);
+    overflow-x:hidden;
+    text-rendering:optimizeLegibility;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* subtle parchment texture */
+  body::before{
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(120% 120% at 85% 0%, #ffffff55, transparent 55%),
+      radial-gradient(90% 90% at 10% 100%, #d8cdb422, transparent 60%);
+    mix-blend-mode:multiply;
+  }
+  main,header,footer{position:relative;z-index:1}
+
+  .wrap{max-width:var(--maxw);margin-inline:auto;padding-inline:clamp(1.15rem,5vw,2rem)}
+
+  /* Small UI labels */
+  .kicker{
+    font-family:"Heebo",system-ui,sans-serif;
+    font-weight:400;font-size:.72rem;letter-spacing:.28em;
+    color:var(--accent);text-transform:none;
+  }
+  .label{
+    font-family:"Heebo",system-ui,sans-serif;
+    font-weight:400;font-size:.74rem;letter-spacing:.14em;color:var(--ink-soft);
+  }
+
+  /* ---------- HERO ---------- */
+  header.hero{
+    min-height:92vh;display:grid;grid-template-rows:auto 1fr auto;
+    padding-block:clamp(1.4rem,5vh,3rem);
+  }
+  .hero-top{display:flex;justify-content:space-between;align-items:baseline;gap:1rem}
+  .wordmark{
+    font-family:"Heebo",system-ui,sans-serif;font-weight:500;
+    letter-spacing:.34em;font-size:.8rem;color:var(--ink);
+  }
+  .hero-stage{
+    display:grid;grid-template-columns:auto 1fr;align-items:center;
+    gap:clamp(1rem,4vw,3rem);align-content:center;
+  }
+  @media(max-width:640px){ .hero-stage{grid-template-columns:1fr;gap:1.4rem} }
+
+  .aleph-holder{justify-self:center}
+  svg.aleph{width:clamp(150px,34vw,300px);height:auto;display:block;overflow:visible}
+  svg.aleph path{
+    fill:none;stroke:var(--ink);
+    stroke-width:9;stroke-linecap:round;stroke-linejoin:round;
+    stroke-dasharray:1;stroke-dashoffset:1;
+    animation:draw 2.1s cubic-bezier(.7,0,.3,1) forwards;
+  }
+  svg.aleph path.p1{animation-delay:.15s}
+  svg.aleph path.p2{animation-delay:1.0s;stroke:var(--accent)}
+  svg.aleph path.p3{animation-delay:1.35s}
+  @keyframes draw{to{stroke-dashoffset:0}}
+  @media(prefers-reduced-motion:reduce){
+    svg.aleph path{animation:none;stroke-dashoffset:0}
+  }
+
+  .hero-lede h1{
+    font-weight:300;font-size:clamp(2.1rem,7vw,4rem);line-height:1.08;
+    margin:.2em 0 .4em;letter-spacing:-.01em;
+  }
+  .hero-lede h1 b{font-weight:700;color:var(--accent)}
+  .hero-lede p{max-width:34ch;color:var(--ink-soft);font-size:1.05rem;margin:0}
+  .hero-foot{display:flex;justify-content:space-between;align-items:center;gap:1rem;color:var(--ink-soft)}
+  .hero-foot .scroll-hint{font-family:"Heebo",sans-serif;font-size:.72rem;letter-spacing:.14em}
+
+  /* ---------- ARTICLE ---------- */
+  article{padding-block:clamp(2.5rem,8vh,5rem)}
+  section.essay{
+    margin-block:clamp(2.2rem,6vh,3.6rem);
+    /* reserve a right-side gutter (inline-start in RTL) for hanging quotes */
+    padding-inline-start:clamp(0rem,7vw,7rem);
+  }
+  @media(max-width:640px){ section.essay{padding-inline-start:0} }
+
+  section.essay > h2{
+    font-weight:500;font-size:clamp(1.5rem,4.5vw,2.15rem);
+    line-height:1.2;margin:.2em 0 .1em;letter-spacing:-.005em;
+  }
+  section.essay > h2::before{
+    content:attr(data-n);
+    font-family:"Heebo",sans-serif;font-weight:400;font-size:.72rem;
+    letter-spacing:.2em;color:var(--accent);
+    display:block;margin-bottom:.7em;
+  }
+  section.essay p{margin:1.05em 0}
+  .lead::first-letter{
+    font-weight:700;font-size:3.1em;line-height:.72;
+    float:inline-start;margin-inline-end:.08em;margin-block-start:.08em;
+    color:var(--accent);
+  }
+  .rule{height:1px;background:var(--rule);border:0;margin:0}
+
+  /* Pull-quote hanging into the RIGHT margin — the reading-start side in RTL.
+     Physical float:right + negative margin-right is the reliable rtl-aware move
+     (logical `float:inline-start` is not yet honoured across engines). */
+  section.essay .pull{
+    float:right;
+    width:clamp(9rem,20vw,13rem);
+    margin-right:clamp(-8rem,-8vw,-2rem);
+    margin-left:1.4rem;
+    margin-block:.35rem;
+    font-weight:300;font-size:1.28rem;line-height:1.32;
+    color:var(--accent);
+    border-right:2px solid var(--accent);
+    padding-right:.9rem;
+    text-align:right;
+  }
+  @media(max-width:640px){
+    section.essay .pull{float:none;width:auto;margin-right:0;margin-left:0;margin-block:1.4rem;font-size:1.15rem}
+  }
+
+  /* ---------- TIMELINE ---------- */
+  .timeline-block{padding-block:clamp(2rem,6vh,3.5rem)}
+  .timeline-head{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;margin-bottom:1.4rem}
+  .timeline-head h2{font-weight:500;font-size:clamp(1.4rem,4vw,1.9rem);margin:0}
+  .rail{
+    overflow-x:auto;overflow-y:hidden;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:thin;scrollbar-color:var(--accent) transparent;
+    padding-bottom:1rem;
+    /* baseline line under the era cards */
+    background:linear-gradient(var(--rule),var(--rule)) 0 calc(100% - 1rem)/100% 1px no-repeat;
+  }
+  .rail::-webkit-scrollbar{height:7px}
+  .rail::-webkit-scrollbar-thumb{background:var(--accent);border-radius:99px}
+  .rail-inner{display:flex;gap:clamp(1rem,3vw,1.8rem);inline-size:max-content;padding-block:.4rem}
+  .era{
+    inline-size:clamp(11rem,42vw,13.5rem);flex:0 0 auto;
+    display:flex;flex-direction:column;gap:.55rem;
+  }
+  .era .glyph{
+    aspect-ratio:1/1;background:var(--parch-2);border:1px solid var(--rule);
+    border-radius:14px;display:grid;place-items:center;padding:1.1rem;
+  }
+  .era svg{width:78%;height:78%;overflow:visible}
+  .era svg path,.era svg line{fill:none;stroke:var(--ink);stroke-width:8;stroke-linecap:round;stroke-linejoin:round}
+  .era .yr{font-family:"Heebo",sans-serif;font-size:.72rem;letter-spacing:.1em;color:var(--accent)}
+  .era h3{font-weight:500;font-size:1.12rem;margin:.1rem 0 0}
+  .era p{margin:0;font-size:.92rem;line-height:1.5;color:var(--ink-soft)}
+  .rail-hint{font-family:"Heebo",sans-serif;font-size:.7rem;letter-spacing:.12em;color:var(--ink-soft)}
+
+  /* ---------- NIKUD DEMO ---------- */
+  .nikud-block{
+    padding-block:clamp(2.6rem,8vh,4.5rem);
+    text-align:center;
+  }
+  .verse{
+    font-family:"David Libre",serif;font-weight:500;
+    font-size:clamp(2rem,8vw,3.6rem);line-height:1.55;
+    margin:1.2rem auto .6rem;max-width:16ch;
+    transition:opacity .5s ease;
+  }
+  .verse.swapping{opacity:0}
+  @media(prefers-reduced-motion:reduce){.verse{transition:none}}
+  .verse-src{
+    font-family:"Heebo",sans-serif;font-size:.78rem;letter-spacing:.12em;color:var(--ink-soft);
+  }
+  .toggle-row{display:inline-flex;align-items:center;gap:.8rem;margin-top:1.8rem}
+  .toggle-row .label{cursor:default}
+  button.switch{
+    appearance:none;border:1px solid var(--accent);background:transparent;
+    inline-size:56px;block-size:30px;border-radius:99px;position:relative;
+    cursor:pointer;padding:0;transition:background .25s ease;
+    flex:0 0 auto;
+  }
+  button.switch::after{
+    content:"";position:absolute;inset-block:3px;inset-inline-start:3px;
+    inline-size:22px;block-size:22px;border-radius:50%;
+    background:var(--accent);transition:inset-inline-start .25s ease;
+  }
+  button.switch[aria-pressed="true"]{background:var(--accent-soft)}
+  button.switch[aria-pressed="true"]::after{inset-inline-start:29px}
+  @media(prefers-reduced-motion:reduce){
+    button.switch,button.switch::after{transition:none}
+  }
+  .nikud-note{max-width:40ch;margin:1.4rem auto 0;color:var(--ink-soft);font-size:1rem}
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    border-top:1px solid var(--rule);
+    padding-block:clamp(2.4rem,7vh,3.6rem) clamp(4.5rem,10vh,6rem);
+    text-align:center;
+  }
+  footer .fmark{font-family:"Heebo",sans-serif;font-weight:500;letter-spacing:.2em;font-size:.9rem}
+  footer .credo{margin:.7rem auto 0;max-width:34ch;color:var(--ink-soft);font-size:1.02rem;font-weight:300}
+
+  /* ---------- NAV (verbatim block below; only vars tuned) ---------- */
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap hero-top">
+    <span class="wordmark">FIVEFOLD</span>
+    <span class="label">חדר רביעי · כתב</span>
+  </div>
+
+  <div class="wrap hero-stage">
+    <div class="aleph-holder" aria-hidden="true">
+      <svg class="aleph" viewBox="0 0 200 220" role="img" aria-label="האות אלף">
+        <path class="p1" pathLength="1" d="M150 34 C118 86 92 128 58 186"/>
+        <path class="p2" pathLength="1" d="M112 92 C122 64 138 56 156 66"/>
+        <path class="p3" pathLength="1" d="M96 128 C72 138 64 160 74 186"/>
+      </svg>
+    </div>
+    <div class="hero-lede">
+      <p class="kicker">שלושת אלפי שנה של קו</p>
+      <h1>הָאוֹת נִכְתֶּבֶת<br><b>מִיָּמִין לִשְׂמֹאל</b></h1>
+      <p>מסה על האות העברית — לא ככלי, אלא כצורה שיש לה זיכרון, קצב, וכיוון משלה.</p>
+    </div>
+  </div>
+
+  <div class="wrap hero-foot">
+    <span class="label">חמישה חדרים · אחד מתוכם כאן</span>
+    <span class="scroll-hint">גללו למטה ↓</span>
+  </div>
+</header>
+
+<main>
+  <article class="wrap">
+
+    <section class="essay">
+      <h2 data-n="פרק ראשון">אלף</h2>
+      <p class="lead">אות אחת אינה סימן בלבד. היא החלטה שנשמרה שלושת אלפי שנה: היכן מתחיל הקו, לאן הוא פונה, ומתי הוא נעצר. האות העברית איננה מתעדת רק את הצליל — היא מתעדת את היד שכתבה אותה, את הקנה, את החרט, את האבן. כשאנו מביטים באות אָלֶף איננו רואים תו בלבד; אנו רואים תנועה שקפאה, מחווה שהפכה לצורה.</p>
+      <p>וכמו כל צורה שנשארת, האות למדה להתאפק. היא ויתרה על העודף, שמרה על ההכרחי, והמירה את חופש היד בחוק ברור. זהו סיפורה של המסה הזו: כיצד קו הופך לכתב, וכתב הופך למסורת שאפשר לקרוא בה גם היום.</p>
+    </section>
+
+    <hr class="rule">
+
+    <section class="essay">
+      <h2 data-n="פרק שני">מסע בן שלושת אלפי שנה</h2>
+      <p class="pull">הכתב הריבועי אינו קופא — הוא פשוט למד היכן לעצור.</p>
+      <p>ראשיתו של הכתב העברי ב<b>כתב עברי קדום</b>, אחות לכתב הפיניקי, שבו כל אות שומרת עדיין על זכר לצורה ציורית: ראש, בית, מים. אלה אותיות של אבן וחרט, זוויתיות ופתוחות, שנכתבו בעולם שבו הכתיבה הייתה עדיין נדירה ויקרה.</p>
+      <p>עם שיבת ציון ובימי הבית השני נעשה מעבר הדרגתי אל <b>הכתב האשורי</b> — הכתב המרובע שאנו מכירים כאות העברית עד היום. כאן ננטשה הצורה הציורית לטובת עיקרון חדש: כל אות נכתבת בתוך אותה משבצת דמיונית, מיושרת אל קו עליון אחד שממנו הכול תלוי.</p>
+      <p>מן הכתב המרובע צמח בימי הביניים <b>כתב רש"י</b> — כתב מלבני ורך יותר, שנועד להבחין בין פירוש לפנים הטקסט, ולא להחליף את הריבוע אלא ללוות אותו. וממנו, דרך הדפוס, נולדה <b>האות המודרנית</b>: אותו שלד אשורי בדיוק, מנוקה, מאוזן, וּמְעוצב מחדש לעידן המסך.</p>
+    </section>
+
+    <hr class="rule">
+
+    <section class="essay">
+      <h2 data-n="פרק שלישי">גאומטריה של איפוק</h2>
+      <p class="pull">בריבוע אין פינות מיותרות — יש רק את מה שנחוץ.</p>
+      <p class="lead">הריבוע מלמד דבר אחד מעל לכול: ריסון. אות אשורית טובה אינה מתפשטת ואינה מצטמצמת — היא ממלאת בדיוק את המשבצת שהוקצתה לה, לא יותר ולא פחות. הגובה קבוע, הרוחב מדוד, והמרווח שבין אות לאות נושם באותה מידה שבה נושמת האות עצמה.</p>
+      <p>מכאן נובע גם השקט של העמוד העברי. משום שכל האותיות תלויות מקו עליון אחד ולא נשענות על בסיס משותף כמו באלפבית הלטיני, השורה העברית קוראת כמעין תקרה ישרה שממנה משתלשלות הצורות. העין אינה נתקלת בבליטות מפתיעות; היא נעה לאורך גבול עליון יציב, והאיפוק הזה הוא שמעניק לטקסט הקלאסי את מראהו המיושב.</p>
+    </section>
+
+    <hr class="rule">
+
+    <section class="essay">
+      <h2 data-n="פרק רביעי">הימין כציר</h2>
+      <p>הכיוון מימין לשמאל אינו מגבלה שיש לעקוף — הוא ציר קומפוזיציוני. כשהקריאה מתחילה מימין, גם המבט הראשון נופל שם, והפינה הימנית־עליונה של העמוד הופכת לנקודת העוגן החזקה ביותר. כותרת, אות פתיחה גדולה, או ציטוט — כולם מבקשים לשבת סמוך לאותו ימין, משום ששם העין נחה תחילה.</p>
+      <p class="pull">היכן שהעין נחה תחילה — שם יושב המשקל.</p>
+      <p>לכן מובאה התלויה אל תוך השוליים הימניים אינה קישוט מיובא; היא מהלך עריכה עברי טבעי. היא מנצלת את הרווח שבצד שממנו ממילא מתחילה הקריאה, ומעניקה לעין תחנת מנוחה בדיוק במקום שאליו היא פונה. לעצב נכון בעברית פירושו לחשוב מן הימין החוצה — לתת למרווח הימני תפקיד, ולא רק להפוך את הפריסה הלטינית כמראה.</p>
+    </section>
+
+  </article>
+
+  <!-- TIMELINE -->
+  <div class="timeline-block wrap">
+    <div class="timeline-head">
+      <h2>ציר הכתב</h2>
+      <span class="rail-hint">← החליקו בציר</span>
+    </div>
+    <div class="rail" tabindex="0" aria-label="ציר תקופות הכתב, ניתן לגלילה אופקית">
+      <div class="rail-inner">
+
+        <div class="era">
+          <div class="glyph" aria-hidden="true">
+            <!-- Paleo aleph: angular, pictographic ox-head -->
+            <svg viewBox="0 0 120 120"><path d="M30 92 L78 24"/><path d="M56 58 L92 40"/><path d="M56 58 L86 88"/></svg>
+          </div>
+          <span class="yr">מאה 10 לפנה״ס לערך</span>
+          <h3>כתב עברי קדום</h3>
+          <p>אחות לכתב הפיניקי; אותיות זוויתיות ששומרות זכר לצורה ציורית.</p>
+        </div>
+
+        <div class="era">
+          <div class="glyph" aria-hidden="true">
+            <!-- Ashuri square aleph -->
+            <svg viewBox="0 0 120 120"><path d="M92 26 C66 56 50 78 30 100"/><path d="M64 58 C72 38 84 32 96 40"/><path d="M52 78 C36 84 30 98 38 108"/></svg>
+          </div>
+          <span class="yr">בית שני ואילך</span>
+          <h3>כתב אשורי</h3>
+          <p>הכתב המרובע התלוי מקו עליון אחד — האות שאנו קוראים בה עד היום.</p>
+        </div>
+
+        <div class="era">
+          <div class="glyph" aria-hidden="true">
+            <!-- Rashi aleph: softer, rounded -->
+            <svg viewBox="0 0 120 120"><path d="M88 34 C60 52 44 74 34 98"/><path d="M60 60 C66 44 80 42 90 52"/><path d="M50 80 C40 86 38 98 48 104"/></svg>
+          </div>
+          <span class="yr">ימי הביניים</span>
+          <h3>כתב רש״י</h3>
+          <p>כתב מלבני ורך שליווה את הריבוע והבחין פירוש מפנים הטקסט.</p>
+        </div>
+
+        <div class="era">
+          <div class="glyph" aria-hidden="true">
+            <!-- Modern aleph: clean, balanced -->
+            <svg viewBox="0 0 120 120"><path d="M90 28 C64 58 48 80 30 102"/><path d="M62 56 C70 36 84 30 96 40"/><path d="M50 80 C34 86 28 100 36 110"/></svg>
+          </div>
+          <span class="yr">עידן הדפוס והמסך</span>
+          <h3>האות המודרנית</h3>
+          <p>אותו שלד אשורי, מנוקה ומאוזן מחדש לקריאה על מסך.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- NIKUD DEMO -->
+  <div class="nikud-block wrap">
+    <span class="kicker">הדגמה · ניקוד</span>
+    <p class="verse" id="verse">בְּרֵאשִׁית בָּרָא אֱלֹהִים אֵת הַשָּׁמַיִם וְאֵת הָאָרֶץ</p>
+    <span class="verse-src">בראשית א׳, א׳</span>
+    <div class="toggle-row">
+      <span class="label" id="switchLabel">ניקוד</span>
+      <button class="switch" id="nikudSwitch" role="switch" aria-checked="true" aria-pressed="true" aria-labelledby="switchLabel"></button>
+    </div>
+    <p class="nikud-note">בלי ניקוד נשען הקורא על ההקשר וממלא את התנועות בעצמו; עם ניקוד נקבע הקצב מראש — כל תנועה מסמנת היכן הקול עולה, נעצר, או נמשך.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="fmark">FIVEFOLD — חדר רביעי מתוך חמישה</div>
+    <p class="credo">כתב הוא קו שלמד להתאפק; אנו מעצבים את המרחב שבין הקווים.</p>
+  </div>
+</footer>
+
+<nav class="ff-nav" dir="ltr" aria-label="Fivefold rooms">
+  <a href="manifesto.html" aria-label="Previous room">&#8592;</a>
+  <a href="index.html" class="ff-home">FIVEFOLD &middot; 4/5</a>
+  <a href="maabada.html" aria-label="Next room">&#8594;</a>
+</nav>
+<style>
+.ff-nav{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:999;display:flex;align-items:center;gap:2px;padding:6px 10px;border-radius:999px;background:var(--ff-nav-bg,rgba(20,20,20,.72));color:var(--ff-nav-fg,#fff);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);font:500 13px/1 system-ui,sans-serif;letter-spacing:.08em}
+.ff-nav a{color:inherit;text-decoration:none;padding:6px 10px;border-radius:999px;opacity:.85}
+.ff-nav a:hover{opacity:1;background:rgba(255,255,255,.12)}
+</style>
+
+<script>
+(function(){
+  var VOWELED = "בְּרֵאשִׁית בָּרָא אֱלֹהִים אֵת הַשָּׁמַיִם וְאֵת הָאָרֶץ";
+  var PLAIN   = "בראשית ברא אלהים את השמים ואת הארץ";
+  var verse  = document.getElementById("verse");
+  var btn    = document.getElementById("nikudSwitch");
+  var on     = true;
+
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function apply(){
+    btn.setAttribute("aria-pressed", on ? "true" : "false");
+    btn.setAttribute("aria-checked", on ? "true" : "false");
+    var text = on ? VOWELED : PLAIN;
+    if(reduce){
+      verse.textContent = text;
+      return;
+    }
+    verse.classList.add("swapping");
+    window.setTimeout(function(){
+      verse.textContent = text;
+      verse.classList.remove("swapping");
+    }, 320);
+  }
+
+  btn.addEventListener("click", function(){ on = !on; apply(); });
+})();
+</script>
+</body>
+</html>

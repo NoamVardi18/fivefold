@@ -1,0 +1,542 @@
+<title>FIVEFOLD · Room I — Kinetic</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Room I of the Fivefold showcase — Kinetic. Motion is the message: typography as physical material.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#050505;
+  --ink:#EDEDEA;
+  --accent:#C8FF4D;
+  --muted:#8a8a86;
+  --ff-nav-bg:rgba(12,12,12,.72);
+  --ff-nav-fg:#EDEDEA;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:"Space Grotesk",system-ui,sans-serif;
+  overflow-x:hidden;
+  min-height:100vh;
+  cursor:none;
+}
+.mono{font-family:"JetBrains Mono",ui-monospace,monospace}
+a{color:inherit}
+
+/* ---------- hero ---------- */
+.hero{
+  position:relative;
+  height:100svh;
+  min-height:520px;
+  width:100%;
+  overflow:hidden;
+}
+#stage{display:block;width:100%;height:100%}
+.hero-meta{
+  position:absolute;
+  top:22px;left:0;right:0;
+  display:flex;justify-content:space-between;
+  padding:0 clamp(16px,4vw,44px);
+  font-size:11px;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--muted);
+  pointer-events:none;
+}
+.hero-meta .accent{color:var(--accent)}
+.hero-hint{
+  position:absolute;
+  bottom:76px;left:50%;transform:translateX(-50%);
+  font-size:10.5px;letter-spacing:.34em;text-transform:uppercase;
+  color:var(--muted);
+  pointer-events:none;
+  animation:pulse 3.4s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:.35}50%{opacity:.8}}
+
+/* ---------- manifesto ---------- */
+.manifesto{
+  max-width:960px;
+  margin:0 auto;
+  padding:clamp(72px,12vw,150px) clamp(20px,5vw,40px) 40px;
+}
+.section-label{
+  font-size:11px;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--accent);
+  margin:0 0 clamp(48px,9vw,90px);
+  display:flex;gap:14px;align-items:center;
+}
+.section-label::after{
+  content:"";height:1px;flex:1;
+  background:linear-gradient(90deg,var(--accent),transparent);
+  opacity:.5;
+}
+.passage{
+  display:grid;
+  grid-template-columns:1fr minmax(220px,300px);
+  gap:clamp(24px,5vw,56px);
+  align-items:start;
+  padding:clamp(40px,7vw,72px) 0;
+  border-top:1px solid rgba(237,237,234,.09);
+  opacity:0;
+  transform:translateY(28px);
+  transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1);
+}
+.passage.in{opacity:1;transform:none}
+.passage:first-of-type{border-top:none}
+.passage .idx{
+  font-family:"JetBrains Mono",monospace;
+  font-size:12px;color:var(--accent);letter-spacing:.1em;
+  margin-bottom:18px;
+}
+.passage h2{
+  font-size:clamp(24px,4.4vw,40px);
+  font-weight:500;line-height:1.08;letter-spacing:-.015em;
+  margin:0 0 20px;
+}
+.passage p{
+  font-size:clamp(15px,1.9vw,18px);
+  line-height:1.62;color:#c9c9c4;margin:0;
+  max-width:56ch;
+}
+.demo{align-self:start}
+.demo canvas{
+  width:100%;height:150px;display:block;
+  border:1px solid rgba(237,237,234,.12);
+  border-radius:10px;background:#0a0a0a;
+}
+.demo .caption{
+  font-family:"JetBrains Mono",monospace;
+  font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);
+  margin-top:12px;display:flex;justify-content:space-between;
+}
+.demo .caption b{color:var(--accent);font-weight:500}
+@media(max-width:720px){
+  .passage{grid-template-columns:1fr;gap:26px}
+  .demo{max-width:340px}
+}
+
+/* ---------- footer ---------- */
+.foot{
+  border-top:1px solid rgba(237,237,234,.1);
+  margin-top:clamp(60px,10vw,120px);
+  padding:38px clamp(20px,5vw,40px) 110px;
+  display:flex;flex-wrap:wrap;gap:14px 28px;
+  justify-content:space-between;align-items:baseline;
+  font-family:"JetBrains Mono",monospace;
+  font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--muted);
+}
+.foot .mark{color:var(--ink);font-weight:500}
+.foot .mark span{color:var(--accent)}
+.foot .credo{max-width:44ch;letter-spacing:.08em;text-transform:none;font-size:12px;color:#9a9a95}
+
+/* ---------- custom cursor ---------- */
+.cur-dot,.cur-ring{
+  position:fixed;top:0;left:0;z-index:9998;
+  pointer-events:none;border-radius:50%;
+  transform:translate(-50%,-50%);
+  will-change:transform;
+  mix-blend-mode:difference;
+}
+.cur-dot{width:6px;height:6px;background:var(--accent)}
+.cur-ring{width:34px;height:34px;border:1.5px solid rgba(237,237,234,.7)}
+
+/* ---------- nav (verbatim styles) ---------- */
+.ff-nav{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:999;display:flex;align-items:center;gap:2px;padding:6px 10px;border-radius:999px;background:var(--ff-nav-bg,rgba(20,20,20,.72));color:var(--ff-nav-fg,#fff);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);font:500 13px/1 system-ui,sans-serif;letter-spacing:.08em}
+.ff-nav a{color:inherit;text-decoration:none;padding:6px 10px;border-radius:999px;opacity:.85}
+.ff-nav a:hover{opacity:1;background:rgba(255,255,255,.12)}
+
+@media(prefers-reduced-motion:reduce){
+  body{cursor:auto}
+  .cur-dot,.cur-ring{display:none}
+  .hero-hint{animation:none}
+  .passage{opacity:1;transform:none;transition:none}
+}
+</style>
+
+<div class="hero" aria-label="Kinetic typography">
+  <canvas id="stage" role="img" aria-label="Headline text rendered as moving particles, cycling through the words Motion, Is, Meaning, Fivefold"></canvas>
+  <div class="hero-meta mono">
+    <span>ROOM <span class="accent">I</span> / V</span>
+    <span>KINETIC</span>
+  </div>
+  <div class="hero-hint mono">Move — the type answers · scroll for the manifesto</div>
+</div>
+
+<main class="manifesto">
+  <p class="section-label mono">Manifesto — Motion is the message</p>
+
+  <article class="passage">
+    <div>
+      <div class="idx mono">01 — WEIGHT</div>
+      <h2>Type is not a picture of an idea. It is a body with mass.</h2>
+      <p>Set a word in stone and it states a fact. Give it weight, friction, and a home to fall back toward, and it starts to argue for itself. At Fivefold we treat every glyph as matter: it has inertia, it resists being pushed, it settles. The reader stops decoding letters and starts feeling intent — because a thing that moves like it is alive is read as meaning something.</p>
+    </div>
+    <div class="demo">
+      <canvas data-ease="linear" aria-label="Animated dot tracing a linear easing curve"></canvas>
+      <div class="caption mono"><span>EASE</span><b>LINEAR</b></div>
+    </div>
+  </article>
+
+  <article class="passage">
+    <div>
+      <div class="idx mono">02 — TIMING</div>
+      <h2>The curve between two frames carries more voice than the frames.</h2>
+      <p>Any interface can get an element from A to B. What separates a surface that feels cheap from one that feels considered is the shape of the transit — the acceleration in, the ease out, the overshoot a spring allows before it rests. Linear motion is a machine reporting a result. A tuned cubic curve is a hand placing an object down. We spend our time in that gap, because that is where trust is built or lost.</p>
+    </div>
+    <div class="demo">
+      <canvas data-ease="cubic" aria-label="Animated dot tracing a cubic-bezier easing curve"></canvas>
+      <div class="caption mono"><span>EASE</span><b>CUBIC-BEZIER</b></div>
+    </div>
+  </article>
+
+  <article class="passage">
+    <div>
+      <div class="idx mono">03 — RESTRAINT</div>
+      <h2>Motion earns its place only when stillness would have said less.</h2>
+      <p>The loudest thing a designer can do is hold everything still and move one element with purpose. We reject motion as decoration — the drift, the parallax, the wobble added because the tool allowed it. Every animation on a Fivefold surface answers a question the eye was already asking: where did this come from, what is it now, where can it go. When the answer is nothing, the right motion is none.</p>
+    </div>
+    <div class="demo">
+      <canvas data-ease="spring" aria-label="Animated dot tracing a spring easing curve with overshoot"></canvas>
+      <div class="caption mono"><span>EASE</span><b>SPRING</b></div>
+    </div>
+  </article>
+</main>
+
+<footer class="foot">
+  <span class="mark">FIVEFOLD <span>—</span> Room I of V</span>
+  <span class="credo">Kinetic — where type stops naming motion and becomes it.</span>
+</footer>
+
+<div class="cur-ring" id="ring" aria-hidden="true"></div>
+<div class="cur-dot" id="dot" aria-hidden="true"></div>
+
+<nav class="ff-nav" dir="ltr" aria-label="Fivefold rooms">
+  <a href="maabada.html" aria-label="Previous room">&#8592;</a>
+  <a href="index.html" class="ff-home">FIVEFOLD &middot; 1/5</a>
+  <a href="evidence.html" aria-label="Next room">&#8594;</a>
+</nav>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var touch = window.matchMedia("(hover: none), (pointer: coarse)").matches;
+  var DPR = Math.min(window.devicePixelRatio || 1, 2);
+  var INK = "#EDEDEA", ACCENT = "#C8FF4D";
+
+  /* ============ HERO PARTICLES ============ */
+  var stage = document.getElementById("stage");
+  var ctx = stage.getContext("2d");
+  var W = 0, H = 0;
+  var words = ["MOTION", "IS", "MEANING", "FIVEFOLD"];
+  var wordIdx = 0;
+  var TARGET = 3000;               // particle budget ceiling
+  var particles = [];
+  var pointer = {x:-9999, y:-9999, active:false};
+  var wind = {x:0, active:0};
+
+  function sizeStage(){
+    W = stage.clientWidth; H = stage.clientHeight;
+    stage.width = Math.round(W * DPR);
+    stage.height = Math.round(H * DPR);
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+  }
+
+  // Sample glyph pixels from an offscreen raster -> array of {x,y}
+  function sampleWord(word){
+    var off = document.createElement("canvas");
+    off.width = Math.round(W); off.height = Math.round(H);
+    var o = off.getContext("2d");
+    o.fillStyle = "#fff";
+    o.textAlign = "center";
+    o.textBaseline = "middle";
+    // fit font size to viewport width
+    var fs = Math.min(H * 0.34, (W * 0.92) / Math.max(word.length * 0.62, 1));
+    fs = Math.max(fs, 40);
+    o.font = "700 " + fs + "px 'Space Grotesk', system-ui, sans-serif";
+    o.fillText(word, W/2, H/2);
+    var data = o.getImageData(0,0,off.width,off.height).data;
+    var pts = [];
+    // adaptive step so denser words don't blow the budget
+    var step = 4;
+    for(var s=0;s<6;s++){
+      pts.length = 0;
+      for(var y=0;y<off.height;y+=step){
+        for(var x=0;x<off.width;x+=step){
+          if(data[(y*off.width + x)*4 + 3] > 128){
+            pts.push({x:x, y:y});
+          }
+        }
+      }
+      if(pts.length <= TARGET) break;
+      step += 1;
+    }
+    return pts;
+  }
+
+  function makeParticles(){
+    var pts = sampleWord(words[0]);
+    var n = Math.min(pts.length, TARGET);
+    particles = [];
+    for(var i=0;i<n;i++){
+      var p = pts[i];
+      particles.push({
+        x: Math.random()*W, y: Math.random()*H,
+        vx:0, vy:0,
+        hx:p.x, hy:p.y,
+        col: Math.random() < 0.06 ? ACCENT : INK
+      });
+    }
+  }
+
+  // Reassign homes to a new word; extra particles park off-home softly.
+  function morphTo(word){
+    var pts = sampleWord(word);
+    if(!pts.length) return;
+    for(var i=0;i<particles.length;i++){
+      var p = pts[i % pts.length];
+      // small scatter when reusing points so overlaps aren't dead-stacked
+      var j = i < pts.length ? 0 : (Math.random()*6 - 3);
+      particles[i].hx = p.x + j;
+      particles[i].hy = p.y + j;
+    }
+  }
+
+  function drawStatic(){
+    // reduced-motion: assemble text at rest, no animation
+    ctx.clearRect(0,0,W,H);
+    var pts = sampleWord(words[words.length-1]); // final word: FIVEFOLD
+    for(var i=0;i<pts.length && i<TARGET;i++){
+      ctx.fillStyle = (i % 17 === 0) ? ACCENT : INK;
+      ctx.fillRect(pts[i].x, pts[i].y, 1.6, 1.6);
+    }
+  }
+
+  var raf = 0;
+  function tick(){
+    ctx.clearRect(0,0,W,H);
+    // wind decay
+    if(wind.active > 0){ wind.active--; } else { wind.x = 0; }
+    for(var i=0;i<particles.length;i++){
+      var p = particles[i];
+      // spring to home
+      p.vx += (p.hx - p.x) * 0.012;
+      p.vy += (p.hy - p.y) * 0.012;
+      // pointer repulsion
+      if(pointer.active){
+        var dx = p.x - pointer.x, dy = p.y - pointer.y;
+        var d2 = dx*dx + dy*dy;
+        if(d2 < 14400){ // 120px radius
+          var d = Math.sqrt(d2) || 1;
+          var f = (120 - d)/120 * 3.2;
+          p.vx += (dx/d)*f;
+          p.vy += (dy/d)*f;
+        }
+      }
+      // wind gust
+      if(wind.x){ p.vx += wind.x * (0.4 + p.hy/H*0.6); }
+      // damping
+      p.vx *= 0.86; p.vy *= 0.86;
+      p.x += p.vx; p.y += p.vy;
+      ctx.fillStyle = p.col;
+      ctx.fillRect(p.x, p.y, 1.7, 1.7);
+    }
+    raf = requestAnimationFrame(tick);
+  }
+
+  function cycleWord(){
+    wordIdx = (wordIdx + 1) % words.length;
+    morphTo(words[wordIdx]);
+  }
+  function gust(){
+    wind.x = (Math.random() < 0.5 ? -1 : 1) * (0.5 + Math.random()*0.9);
+    wind.active = 55;
+  }
+
+  function initHero(){
+    sizeStage();
+    if(reduce){ drawStatic(); return; }
+    makeParticles();
+    tick();
+    setInterval(cycleWord, 3200);
+    setInterval(function(){ if(Math.random() < 0.6) gust(); }, 5200);
+  }
+
+  // pointer -> stage local coords (only when not touch, matches repulsion intent)
+  stage.addEventListener("pointermove", function(e){
+    var r = stage.getBoundingClientRect();
+    pointer.x = e.clientX - r.left;
+    pointer.y = e.clientY - r.top;
+    pointer.active = true;
+  });
+  stage.addEventListener("pointerleave", function(){ pointer.active = false; });
+
+  var rt;
+  window.addEventListener("resize", function(){
+    clearTimeout(rt);
+    rt = setTimeout(function(){
+      sizeStage();
+      if(reduce){ drawStatic(); return; }
+      // recompute homes for current word at new size
+      makeParticles();
+      morphTo(words[wordIdx]);
+    }, 180);
+  });
+
+  /* ============ EASING DEMOS ============ */
+  function cubicBezier(p1x,p1y,p2x,p2y){
+    // solve bezier y for given x (t param), Newton + bisection
+    function bez(t,a,b){ return ((1-t)*(1-t)*(1-t)*0)+(3*(1-t)*(1-t)*t*a)+(3*(1-t)*t*t*b)+(t*t*t*1); }
+    return function(x){
+      var t = x, i, d;
+      for(i=0;i<8;i++){
+        var xe = bez(t,p1x,p2x) - x;
+        d = (3*(1-t)*(1-t)*(p1x)) + (6*(1-t)*t*(p2x-p1x)) + (3*t*t*(1-p2x));
+        if(Math.abs(xe) < 1e-4) break;
+        if(Math.abs(d) < 1e-6) break;
+        t = t - xe/d;
+      }
+      t = Math.max(0, Math.min(1, t));
+      return bez(t,p1y,p2y);
+    };
+  }
+  var easers = {
+    linear: function(x){ return x; },
+    cubic: cubicBezier(0.16,1,0.3,1),        // expressive ease-out
+    spring: function(x){
+      if(x<=0) return 0; if(x>=1) return 1;
+      // damped spring settling to 1 with overshoot
+      return 1 - Math.pow(2,-9*x) * Math.cos(x*Math.PI* 3.1);
+    }
+  };
+
+  function setupDemo(canvas){
+    var kind = canvas.getAttribute("data-ease");
+    var c = canvas.getContext("2d");
+    var ease = easers[kind] || easers.linear;
+    var cw=0, ch=0, pad=20;
+    function size(){
+      cw = canvas.clientWidth; ch = canvas.clientHeight;
+      canvas.width = Math.round(cw*DPR); canvas.height = Math.round(ch*DPR);
+      c.setTransform(DPR,0,0,DPR,0,0);
+    }
+    size();
+
+    function curveXY(t){
+      var x = pad + t*(cw - pad*2);
+      var y = (ch - pad) - ease(t)*(ch - pad*2);
+      return [x,y];
+    }
+    function drawFrame(prog){
+      c.clearRect(0,0,cw,ch);
+      // baseline grid
+      c.strokeStyle = "rgba(237,237,234,.10)";
+      c.lineWidth = 1;
+      c.beginPath();
+      c.moveTo(pad, ch-pad); c.lineTo(cw-pad, ch-pad);
+      c.moveTo(pad, ch-pad); c.lineTo(pad, pad);
+      c.stroke();
+      // curve
+      c.strokeStyle = "rgba(237,237,234,.5)";
+      c.lineWidth = 1.5;
+      c.beginPath();
+      for(var t=0;t<=1.0001;t+=0.02){
+        var xy = curveXY(t);
+        if(t===0) c.moveTo(xy[0],xy[1]); else c.lineTo(xy[0],xy[1]);
+      }
+      c.stroke();
+      // moving dot on the curve at current progress
+      var d = curveXY(prog);
+      c.fillStyle = ACCENT;
+      c.beginPath(); c.arc(d[0], d[1], 4.5, 0, Math.PI*2); c.fill();
+      // ghost track: dot position mapped to left rail (shows value)
+      c.fillStyle = "rgba(200,255,77,.28)";
+      c.beginPath(); c.arc(pad, d[1], 3, 0, Math.PI*2); c.fill();
+    }
+
+    if(reduce){
+      // static curve diagram, dot parked at end
+      drawFrame(1);
+      return;
+    }
+    var t0 = null, DUR = 1600, HOLD = 500;
+    function loop(ts){
+      if(t0===null) t0 = ts;
+      var el = (ts - t0) % (DUR + HOLD);
+      var prog = el < DUR ? el/DUR : 1;
+      drawFrame(prog);
+      requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+
+    var dt;
+    window.addEventListener("resize", function(){
+      clearTimeout(dt);
+      dt = setTimeout(function(){ size(); if(reduce) drawFrame(1); }, 180);
+    });
+  }
+
+  /* ============ SCROLL REVEAL ============ */
+  function initReveal(){
+    var items = document.querySelectorAll(".passage");
+    if(reduce || !("IntersectionObserver" in window)){
+      items.forEach(function(el){ el.classList.add("in"); });
+      return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add("in"); io.unobserve(en.target); }
+      });
+    }, {threshold:0.2});
+    items.forEach(function(el){ io.observe(el); });
+  }
+
+  /* ============ CUSTOM CURSOR ============ */
+  function initCursor(){
+    if(reduce || touch) return;
+    var dot = document.getElementById("dot");
+    var ring = document.getElementById("ring");
+    var mx=innerWidth/2, my=innerHeight/2, rx=mx, ry=my, px=mx, py=my;
+    window.addEventListener("pointermove", function(e){
+      mx = e.clientX; my = e.clientY;
+    }, {passive:true});
+    function follow(){
+      dot.style.transform = "translate("+mx+"px,"+my+"px) translate(-50%,-50%)";
+      // ring lags -> velocity stretch
+      px = rx; py = ry;
+      rx += (mx-rx)*0.2; ry += (my-ry)*0.2;
+      var vx = rx-px, vy = ry-py;
+      var sp = Math.min(Math.sqrt(vx*vx+vy*vy)/14, 0.6);
+      var ang = Math.atan2(vy,vx);
+      ring.style.transform =
+        "translate("+rx+"px,"+ry+"px) translate(-50%,-50%) rotate("+ang+"rad) scale("+(1+sp)+","+(1-sp*0.6)+")";
+      requestAnimationFrame(follow);
+    }
+    follow();
+  }
+
+  /* ============ BOOT ============ */
+  var booted = false;
+  function boot(){
+    if(booted) return; booted = true;
+    initHero();
+    document.querySelectorAll(".demo canvas").forEach(setupDemo);
+    initReveal();
+    initCursor();
+  }
+  // Wait for fonts so glyph raster is the real Space Grotesk, not a fallback.
+  if(document.fonts && document.fonts.ready){
+    document.fonts.ready.then(boot);
+    // safety: boot anyway if fonts stall
+    setTimeout(boot, 1800);
+  } else {
+    boot();
+  }
+})();
+</script>
