@@ -1,0 +1,842 @@
+<title>הבוסית במשקפיים</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Secular+One&family=Assistant:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+:root{
+  --bg:#F5F8FA; --surface:#FFFFFF; --ink:#1B2530; --muted:#5A6878; --line:#DCE3EA;
+  --cherry:#C9364F; --cherry-soft:#FBE7EB; --pool:#0F86BD; --pool-soft:#E2F2FA;
+  --sun:#F2C23E; --sun-soft:#FDF4D6; --turf:#2F7D50; --turf-soft:#E3F2E8;
+  --code-bg:#14202B; --code-ink:#E6EEF5; --code-muted:#8FA3B6;
+  --gingham-a:rgba(201,54,79,.18); --gingham-b:rgba(201,54,79,.10);
+  --shadow:0 1px 2px rgba(20,32,43,.06),0 4px 16px rgba(20,32,43,.05);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0F151B; --surface:#17202A; --ink:#E7EDF3; --muted:#9AA9B8; --line:#2A3643;
+    --cherry:#F0697F; --cherry-soft:#3A1E26; --pool:#4DB6E6; --pool-soft:#15303E;
+    --sun:#F5CE5A; --sun-soft:#3A3219; --turf:#5CC18A; --turf-soft:#173325;
+    --code-bg:#0A1016; --code-ink:#E6EEF5; --code-muted:#7F93A6;
+    --gingham-a:rgba(240,105,127,.20); --gingham-b:rgba(240,105,127,.10);
+    --shadow:0 1px 2px rgba(0,0,0,.3);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0F151B; --surface:#17202A; --ink:#E7EDF3; --muted:#9AA9B8; --line:#2A3643;
+  --cherry:#F0697F; --cherry-soft:#3A1E26; --pool:#4DB6E6; --pool-soft:#15303E;
+  --sun:#F5CE5A; --sun-soft:#3A3219; --turf:#5CC18A; --turf-soft:#173325;
+  --code-bg:#0A1016; --code-ink:#E6EEF5; --code-muted:#7F93A6;
+  --gingham-a:rgba(240,105,127,.20); --gingham-b:rgba(240,105,127,.10);
+  --shadow:0 1px 2px rgba(0,0,0,.3);
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:"Assistant","Arial Hebrew","Segoe UI",Arial,sans-serif;font-size:17px;line-height:1.65;margin:0}
+.wrap{max-width:980px;margin:0 auto;padding-inline:20px;padding-block:0 80px}
+h1,h2,h3{font-family:"Secular One","Assistant",Arial,sans-serif;font-weight:400;line-height:1.2;text-wrap:balance;margin:0}
+h2{font-size:1.85rem;margin-bottom:.4rem}
+h3{font-size:1.25rem;margin-block:1.6rem .5rem}
+p{margin:.5rem 0;max-width:68ch}
+a{color:var(--pool)}
+ul,ol{padding-inline-start:1.3rem;margin:.4rem 0}
+li{margin:.25rem 0;max-width:70ch}
+strong{font-weight:700}
+.ltr{direction:ltr;unicode-bidi:isolate}
+
+/* hero with gingham band */
+.gingham{height:14px;background:
+  repeating-linear-gradient(90deg,var(--gingham-a) 0 12px,transparent 12px 24px),
+  repeating-linear-gradient(0deg,var(--gingham-b) 0 7px,transparent 7px 14px);}
+header.hero{padding-block:36px 20px}
+.eyebrow{font-size:.85rem;letter-spacing:.06em;color:var(--cherry);font-weight:700}
+.hero h1{font-size:clamp(2.2rem,6vw,3.4rem);margin-block:.3rem .6rem}
+.hero .lede{font-size:1.15rem;color:var(--muted);max-width:60ch}
+.sunnies{display:inline-flex;gap:4px;vertical-align:middle;margin-inline-start:8px}
+.sunnies i{width:26px;height:26px;border-radius:50%;background:var(--ink);border:5px solid var(--sun-soft);box-shadow:0 0 0 2px var(--sun);position:relative;display:block}
+
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding-block:10px;margin-bottom:10px}
+nav.toc .row{display:flex;gap:8px;overflow-x:auto;scrollbar-width:thin;padding-bottom:2px}
+nav.toc a{flex:none;text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:4px 12px;font-size:.92rem;font-weight:600}
+nav.toc a:hover,nav.toc a:focus-visible{border-color:var(--cherry);color:var(--cherry);outline:none}
+
+section{padding-block:34px 8px;border-top:1px dashed var(--line)}
+section:first-of-type{border-top:0}
+.kicker{color:var(--muted);font-size:.95rem;margin-bottom:.6rem}
+
+.note{border-radius:12px;padding:14px 16px;margin:14px 0}
+.note.warn{background:var(--cherry-soft)}
+.note.tip{background:var(--turf-soft)}
+.note.info{background:var(--pool-soft)}
+.note.sun{background:var(--sun-soft)}
+.note b.tag{display:block;font-size:.85rem;letter-spacing:.04em;margin-bottom:2px}
+
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin:12px 0}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.card h4{margin:0 0 6px;font-size:1.05rem;font-family:"Secular One",Arial,sans-serif;font-weight:400}
+.card .sub{color:var(--muted);font-size:.9rem}
+
+.tbl{overflow-x:auto;margin:12px 0;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:620px;font-size:.95rem}
+th,td{text-align:start;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:700;background:var(--bg);font-size:.88rem}
+tr:last-child td{border-bottom:0}
+td.num{font-variant-numeric:tabular-nums;white-space:nowrap;direction:ltr;text-align:end}
+.pill{display:inline-block;font-size:.78rem;font-weight:700;border-radius:999px;padding:1px 9px;white-space:nowrap}
+.pill.go{background:var(--turf-soft);color:var(--turf)}
+.pill.alt{background:var(--pool-soft);color:var(--pool)}
+.pill.no{background:var(--cherry-soft);color:var(--cherry)}
+
+/* settings panel */
+.settings{background:var(--surface);border:2px solid var(--sun);border-radius:14px;padding:16px 18px;margin:16px 0}
+.settings .fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-top:8px}
+.settings label{display:flex;flex-direction:column;gap:4px;font-weight:600;font-size:.9rem}
+.settings input,.settings select{font:inherit;font-size:1rem;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+.settings input:focus-visible,.settings select:focus-visible{outline:2px solid var(--pool);outline-offset:1px}
+
+/* prompt blocks */
+.prompt{margin:12px 0 18px;border-radius:12px;overflow:hidden;background:var(--code-bg);box-shadow:var(--shadow)}
+.prompt .bar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 12px;background:rgba(255,255,255,.05);color:var(--code-muted);font-size:.85rem}
+.prompt .bar span{font-weight:600}
+.prompt button{font:inherit;font-size:.85rem;font-weight:700;cursor:pointer;border:0;border-radius:8px;padding:5px 12px;background:var(--sun);color:#1B2530}
+.prompt button:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.prompt pre{margin:0;padding:14px 16px;overflow-x:auto;direction:ltr;text-align:left;white-space:pre-wrap;word-break:break-word;font-family:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;font-size:.84rem;line-height:1.6;color:var(--code-ink)}
+.prompt pre.he{direction:rtl;text-align:right;font-family:"Assistant",Arial,sans-serif;font-size:.95rem}
+
+/* stages */
+.stages{display:grid;gap:10px;margin:12px 0;counter-reset:st}
+.stage{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.stage input{width:20px;height:20px;margin-top:4px;accent-color:var(--turf)}
+.stage .when{color:var(--muted);font-size:.85rem;font-weight:700}
+.stage.done{opacity:.6}
+.stage.done .t{text-decoration:line-through}
+
+.shot td:first-child{font-weight:700;color:var(--cherry);white-space:nowrap}
+footer{margin-top:40px;color:var(--muted);font-size:.9rem}
+@media (prefers-reduced-motion:no-preference){ nav.toc a{transition:border-color .15s,color .15s} }
+@media (max-width:520px){ body{font-size:16px} h2{font-size:1.5rem} }
+</style>
+
+<div class="gingham" aria-hidden="true"></div>
+<div class="wrap" dir="rtl" lang="he">
+
+<header class="hero">
+  <div class="eyebrow">תוכנית הפקה מא' עד ת' · פיילוט + 2 פרקים · 27.9.2026</div>
+  <h1>הבוסית במשקפיים<span class="sunnies" aria-hidden="true"><i></i><i></i></span></h1>
+  <p class="lede">סדרת אנימציה קצרה לרשתות על הבת של הלקוח ושני האקיטות שלה. בדף: ניתוח הרפרנסים, בחירת כלים, שיטה לשמירת דמויות, שלוש הצעות עלילה לפיילוט שהלקוח יבחר מהן, ופרומפטים מוכנים להעתקה לכל שלב.</p>
+  <div class="note warn"><b class="tag">עדכון: הפורמט השתנה</b>הסדרה עוברת לפרקים מלאים: <b>אופקי 16:9, כ-3–4 דקות, 24fps</b>, ולא רילס. בדף הזה חלק מהפרומפטים והשוט ליסט עדיין בפורמט האנכי הישן. הגרסה המעודכנת (תוכנית, פרומפטים ב-16:9, שוט ליסט של 49 שוטים ומפרט עריכה) נמצאת בתיקייה <span class="ltr">cool-baby-series/</span> בריפו.</div>
+</header>
+
+<nav class="toc" aria-label="תוכן">
+  <div class="row">
+    <a href="#seen">מה ראיתי</a>
+    <a href="#refs">הרפרנסים</a>
+    <a href="#concept">הקונספט</a>
+    <a href="#pilot">הפיילוט</a>
+    <a href="#proof">מי שהצליח</a>
+    <a href="#tools">כלים ומודלים</a>
+    <a href="#lock">שמירת דמויות</a>
+    <a href="#prompts">פרומפטים</a>
+    <a href="#shots">שוט ליסט</a>
+    <a href="#edit">עריכה</a>
+    <a href="#stages">לוח זמנים</a>
+    <a href="#publish">פרסום</a>
+    <a href="#money">כסף</a>
+  </div>
+</nav>
+
+<!-- ============ SEEN ============ -->
+<section id="seen">
+  <h2>מה ראיתי ומה לא</h2>
+  <div class="note warn">
+    <b class="tag">לא הצלחתי לפתוח</b>
+    הסביבה שלי חוסמת גישה ל-YouTube ול-chatgpt.com. את הסרטון הראשון זיהיתי רק לפי השם: <span class="ltr">"How to Build a Kids Animation Channel with AI (Full Workflow)"</span> (פורסם ביוני 2026). את התוכן שלו ואת הסרטון השני לא ראיתי, וגם לא את השיחה בצ'אט, אז אני לא יכול לאשר שזה מה שהלקוח חיפש. את שיטת הרפרנסים שבנויה על דף דמות אחד קבוע, שהסרטון הראשון מלמד לפי מה שתיארת, כתבתי כאן כשיטה המקובלת (סעיף "שמירת דמויות"). אם תדביק לי תמלול של הסרטונים או את טקסט הצ'אט, אתאים את התוכנית.
+  </div>
+  <h3>על התוכנית שהצ'אט כתב</h3>
+  <div class="grid2">
+    <div class="card">
+      <h4>מה נכון בה ונשאר</h4>
+      <ul>
+        <li>לא עושים text-to-video. תמיד תמונת מפתח מאושרת ואז אנימציה.</li>
+        <li>שערי אישור מול הלקוח (סגנון ← דמויות ← תסריט ← הפקה). כל שינוי אחרי שער עולה כסף.</li>
+        <li>לתמחר לפי "עלות לשוט מאושר" ולא לפי מחיר ג'נרציה.</li>
+        <li>Unlimited של Higgsfield הוא לשימוש ידני באתר בלבד, לא דרך API.</li>
+        <li>החתך ("cut") עדיף על מעבר גנרטיבי בין שוטים.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>מה לא מתאים לפרויקט הזה</h4>
+      <ul>
+        <li><b>הוא ממליץ לא להשתמש בדמות של הבת.</b> אבל הלקוח ביקש בדיוק סדרה עליה. אנחנו כן יוצרים אותה, בהסכמת האב ובגרסה מצוירת (פרטיות: ראו למטה).</li>
+        <li>API, WhisperX, LatentSync, קבצי JSON ו-Git: זה מוגזם לפיילוט. אפשר לחזור לזה אם הסדרה תגדל ל-20+ פרקים.</li>
+        <li><b>לא צריך Lip-sync.</b> זו תינוקת שעוד לא מדברת. קריין, מוזיקה ואפקטים, וזהו. זה חוסך את החלק הכי שביר בכל הפקת AI.</li>
+        <li>דמויות מומצאות (נורי/מומו/טיק): לא רלוונטי.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ REFS ============ -->
+<section id="refs">
+  <h2>ניתוח הרפרנסים</h2>
+  <p class="kicker">מה צריך לנעול בכל דמות. אלה הפרטים שהופכים אותה לזהה מיד.</p>
+
+  <div class="note warn">
+    <b class="tag">שים לב: התמונה הראשונה היא AI והיא מטעה</b>
+    באיור של האבא על הספה הכלבים יצאו <b>שיבה אינו</b> קטנים. בתמונות האמיתיות הם <b>אקיטות יפניות</b>: גדולים פי כמה, פרווה עבה, ישובים הם כמעט בגובה של מבוגר. גם התינוק באיור יצא עם פנים אחרות (בהירות יותר ובלי הלחיים המלאות). <b>לפנים של הילדה משתמשים רק בתמונות האמיתיות.</b> מהאיור לוקחים רק את האבא (זקן מאפיר, סוודר שחור) ואת הסלון.
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h4>הילדה ("הבוסית")</h4>
+      <div class="sub">בת כ-9–12 חודשים</div>
+      <ul>
+        <li>פנים עגולות, לחיים מלאות וורודות, עיניים חומות-כהות גדולות</li>
+        <li>שיער חום-כהה קצר עם פוני צידי</li>
+        <li><b>סימן היכר #1:</b> משקפי שמש עגולים בצבע קרם עם אוזני דובי</li>
+        <li><b>סימן היכר #2:</b> כובע טמבל משבצות אדום-לבן עם דובדבן רקום</li>
+        <li>בגד ים/בגד גוף צהוב עם שוליים לבנים</li>
+        <li><b>התנוחה שלה:</b> יושבת ברגליים משוכלות, שתי ידיים על הברכיים, מבט רגוע של "אני הבוס". זה חוזר ב-3 תמונות ואמיתי, ולכן זו האישיות של הדמות.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>אקיטה 1 (קולר ורוד)</h4>
+      <div class="sub">הענק המחייך</div>
+      <ul>
+        <li>פנים, חזה ורגליים לבנים-קרם, גב ואוזניים ג'ינג'ר בהיר</li>
+        <li>פה פתוח, לשון ורודה, "מחייך" תמיד</li>
+        <li>קולר עור ורוד עם אבזם כסף</li>
+        <li>אופי מוצע: הטיפשון החמוד, מתלהב מהכול</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>אקיטה 2 (קולר שחור)</h4>
+      <div class="sub">שומר הראש</div>
+      <ul>
+        <li>פרווה אדמדמה-כתומה עמוקה, סימני לבן (אוראג'ירו) בלחיים, בחזה וברגליים</li>
+        <li>מסתכל הצידה, זקוף, אצילי</li>
+        <li>קולר ניילון שחור פשוט</li>
+        <li>אופי מוצע: הרציני והזהיר שתמיד צודק</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>האבא + לוקיישנים</h4>
+      <div class="sub">דמות משנה</div>
+      <ul>
+        <li>שיער כהה קצר, זקן מלא שמאפיר בסנטר, סוודר שחור</li>
+        <li><b>חצר:</b> דשא סינטטי ירוק, קירות פנל לבנים, אזור חול עם סלע גדול</li>
+        <li><b>בריכה:</b> מים טורקיז, גלגל ים</li>
+        <li><b>סלון:</b> ספה אפורה, כריות לבנות, צמח, נר</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="note sun">
+    <b class="tag">זכויות</b>
+    בתמונת הבריכה הגלגל הוא של <b>Mickey</b>. אסור שהלוגו או הדמות יופיעו בסדרה, כי זה קניין רוחני של דיסני. בפרומפטים הגלגל מתואר כ"גלגל ים כחול עם כוכבים". אותו דבר לגבי ה-"BABY FLOAT": מעצבים גלגל משלנו.
+  </div>
+</section>
+
+<!-- ============ CONCEPT ============ -->
+<section id="concept">
+  <h2>הקונספט של הסדרה</h2>
+  <p class="kicker">הצעה שנשענת על מה שכבר רואים בתמונות. הלקוח יכול לשנות כל דבר.</p>
+  <div class="card">
+    <h4>שם עבודה: "הבוסית במשקפיים" / <span class="ltr">"Cool Baby"</span></h4>
+    <p><b>הרעיון:</b> תינוקת שעוד לא אומרת מילה, אבל היא הבוס הכי רגוע בעולם. שני האקיטות הענקיים שלה הם הצוות שלה. <b>כשהיא מרכיבה את משקפי הדובי, העולם הרגיל הופך להרפתקה</b>: החצר נהיית ג'ונגל, הבריכה אוקיינוס והספה ממלכת עננים. כשהיא מורידה אותם חוזרים למציאות, ולרוב מתברר שכל ההרפתקה הייתה על משהו קטן כמו כובע, במבה או כדור.</p>
+    <p><b>למה זה עובד לרשתות:</b></p>
+    <ul>
+      <li><b>מנגנון קבוע:</b> "משקפיים עולים ← העולם משתנה". הצופים מזהים אותו ומחכים לו בכל פרק. זה גם רגע ה-wow הוויזואלי.</li>
+      <li><b>בלי דיאלוג:</b> מספר קריין אחד, והתינוקת "מדברת" דרך הבעות. אין lip-sync ואין בעיית עברית בפה של דמות, וזה עובד בכל שפה (אפשר להוסיף כתוביות באנגלית ולהגיע לקהל עולמי).</li>
+      <li><b>אמיתי:</b> התנוחה, המשקפיים, הכלבים והחצר קיימים באמת, והמשפחה והחברים יזהו את זה מיד.</li>
+      <li><b>פורמט:</b> 45–75 שניות, אנכי 9:16. פרק = רילס.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ PILOT ============ -->
+<section id="pilot">
+  <h2>הפיילוט: 3 הצעות, הלקוח בוחר</h2>
+  <p class="kicker">שלח לו את שלושתן כמו שהן. הוא יכול לבחור אחת, לשלב ביניהן או להביא רעיון משלו. לכל אחת פירטתי מה היא דורשת בהפקה.</p>
+  <div class="grid2">
+    <div class="card">
+      <h4>א. "הכובע שעף" <span class="pill go">מומלץ לפיילוט</span></h4>
+      <p>רוח מעיפה את כובע הדובדבן. המשקפיים עולים, החצר הופכת לג'ונגל, והבוסית רוכבת על הגב של אקיטה 1 כדי להציל את הכובע מציפור צהובה שמנסה ללבוש אותו. היא פותרת את זה בלי מילה: מציעה לציפור חצי ביסקוויט.</p>
+      <p class="sub">הפקה: לוקיישן אחד (חצר + גרסת ג'ונגל), 3 דמויות + ציפור. מציג את כל הדמויות ואת המנגנון.</p>
+    </div>
+    <div class="card">
+      <h4>ב. "הבוסית והים"</h4>
+      <p>יום בבריכה. משקפיים עולים, הגלגל הופך לספינה והבריכה לאוקיינוס. אקיטה 1 קופץ למים בשמחה ואקיטה 2 מסרב בכבוד. דג קטן מבקש עזרה למצוא את הדרך הביתה.</p>
+      <p class="sub">הפקה: מים הם הדבר הכי קשה ל-AI לשמור עקבי. מומלץ כפרק 2 או 3, לא כפיילוט.</p>
+    </div>
+    <div class="card">
+      <h4>ג. "שנ"צ של אבא"</h4>
+      <p>אבא נרדם על הספה. משקפיים עולים, הספה נהיית ממלכת עננים והנחירות של אבא הן "הר רועם". שני האקיטות שומרים על השקט כדי שהבוסית תגיע לבקבוק שעל השולחן.</p>
+      <p class="sub">הפקה: פנים הבית, 4 דמויות. יותר דמויות בפריים = יותר סיכון לחוסר עקביות. מתאים כפרק 3.</p>
+    </div>
+  </div>
+  <h3>שאלות לשיחה עם הלקוח (15 דקות)</h3>
+  <ol>
+    <li>איזו עלילה לפיילוט: א, ב, ג או משהו אחר? יש רגע אמיתי מהחיים שלה שהוא רוצה שיופיע?</li>
+    <li>השמות: השם האמיתי של הילדה או כינוי? שמות הכלבים? (לפרטיות אני ממליץ על כינוי.)</li>
+    <li>האופי של כל כלב: מי השובב ומי הרציני? אולי זה הפוך במציאות.</li>
+    <li>קריינות: <b>האבא בקול שלו</b> (הכי אותנטי ובחינם), קריין מקצועי, או קול AI?</li>
+    <li>סגנון: תלת-ממד רך (כמו סרטי אנימציה גדולים) או ציור ספר ילדים דו-ממדי? אראה לו שתי תמונות לדוגמה.</li>
+    <li>לאן זה עולה: אינסטגרם, יוטיוב? חשבון חדש לסדרה או קיים? (על TikTok יש סיכון מדיניות, ראו "פרסום".)</li>
+    <li>קהל: בעיקר משפחה וחברים, או מטרה לבנות ערוץ ולהרוויח?</li>
+    <li>תדירות אחרי הפיילוט: פרק בשבוע? בשבועיים?</li>
+    <li>צריך עוד חומרים: 15–20 תמונות נוספות (פנים של הילדה <b>בלי</b> משקפיים מכמה זוויות, כל כלב לבד מהצד ומלפנים, החצר, האבא).</li>
+    <li>אישור בכתב (וואטסאפ מספיק) שהוא מסכים שתמונות הילדה יועלו לכלי AI לצורך יצירת הדמות.</li>
+  </ol>
+</section>
+
+<!-- ============ PROOF ============ -->
+<section id="proof">
+  <h2>מה עשו אלה שהצליחו</h2>
+  <p class="kicker">מדריכים ומקרים אמיתיים שמצאתי. רוב "המדריכים" ברשת הם פרסום לקורס או לכלי, ולכן סימנתי ליד כל אחד כמה הוא אמין.</p>
+  <div class="grid2">
+    <div class="card">
+      <h4>סדרה על הכלב של היוצר <span class="pill go">הכי קרוב אלינו</span></h4>
+      <div class="sub">אינסטגרם, מאי–אוגוסט 2026 · נתוני Insights שפורסמו ב-AI Journal</div>
+      <ul>
+        <li><b>4.4 מיליון צפיות ב-90 יום.</b> 97% מהצפיות הגיעו ממי שלא עקב, ופרק אחד של 15 שניות הגיע ל-1.07 מיליון.</li>
+        <li><b>פרק = 15 שניות, 4–5 פריימים.</b> כחצי שעה לפרק, עם דפי דמות קבועים.</li>
+        <li><b>הסוד:</b> מצבים <b>אמיתיים</b> מחיי הכלב (תופס את המיטה, מגיב לשקית החטיפים). "המצב אמיתי, רק הציור סינתטי."</li>
+        <li>כל פוסט סומן כ-AI, וזה לא פגע בחשיפה.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>ד"ר קרלה אנגלברכט <span class="pill alt">מומחית תוכן ילדים</span></h4>
+      <div class="sub">לשעבר Sesame Street, PBS Kids ו-Netflix · מדריכים ב-Substack, 2026</div>
+      <ul>
+        <li>דפי דמות קודם. את הרפרנסים מכניסים כ"מרכיבים" (דמות, חפץ, מקום) ולא כפריים ראשון נעול.</li>
+        <li>פריים מסוף קליפ מאושר חוזר כרפרנס לשוט הבא.</li>
+        <li>לכל סיפור צריך סיבה, תוצאה ומשמעות. לפעוטות שירים איטיים ופשוטים.</li>
+        <li>"בניית מערכת פרומפטים משלך היא המיומנות האמיתית."</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>FUNTASTIC YT (פיליפינים) <span class="pill no">דוגמה למה לא לעשות</span></h4>
+      <div class="sub">ראיון ב-NPR, 2025</div>
+      <ul>
+        <li>כ-600 אלף מנויים ו-9,000$ בחודש, עם Kling ו-ChatGPT ו-1–2 סרטונים ביום.</li>
+        <li>זה בדיוק הדפוס ש"מדיניות התוכן הלא-אותנטי" של יוטיוב פוגעת בו. בינואר 2026 נסגרו ערוצי AI עם 35 מיליון מנויים ביחד.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>הסרטון ששלחת <span class="pill alt">פרסומי</span></h4>
+      <div class="sub">NnvRMs_0UQ8 · 28.6.2026</div>
+      <ul>
+        <li>לפי התיאור שלו הוא מקדם את "Seedance 2.0 on Higgsfield" (כנראה שיתוף פעולה ממומן). התמלול לא היה זמין לי.</li>
+        <li>אותה שיטה מופיעה במדריך הרשמי של Higgsfield: פריים של הגיבור ודפי חפצים מכמה זוויות קודם, ואז כל סצנה מפנה אליהם כרפרנס. זה מה שכתוב בדף הזה.</li>
+      </ul>
+    </div>
+  </div>
+  <h3>מה זה משנה בתוכנית שלנו</h3>
+  <ul>
+    <li><b>שני אורכים:</b> פרקי "רגע" של 15–20 שניות (מצב אמיתי אחד מהבית, 4–5 פריימים) בין פרקי הרפתקה של כדקה. אלה זולים, מהירים וויראליים. <b>לבקש מהאבא רשימה של 10 רגעים אמיתיים ומצחיקים</b> של הילדה והכלבים.</li>
+    <li>כל פרק שונה באמת בסיפור, ולא רק בפרומפט. זה מגן גם מהמדיניות של יוטיוב.</li>
+    <li>לא לבנות מודל עסקי על הכנסות מיוטיוב. בערוצי ילדים ההכנסה נמוכה (CPM של כ-$1–3 לאנימציה), והכסף האמיתי מגיע משיתופי פעולה עם מותגים וממרצ'נדייז.</li>
+  </ul>
+</section>
+
+<!-- ============ TOOLS ============ -->
+<section id="tools">
+  <h2>כלים ומודלים: על מה ללכת</h2>
+  <p class="kicker">ההמלצה בשורה אחת: <b>מנוי Higgsfield אחד כבית</b> (תמונות + וידאו מכל המודלים הגדולים במקום אחד), <b>Remotion לעריכה (Claude עורך)</b>, <b>Suno או ElevenLabs למוזיקה</b>, ו<b>קריינות בקול של האבא</b>.</p>
+
+  <div class="tbl"><table>
+    <thead><tr><th>משימה</th><th>הכלי</th><th>למה</th><th>חלופה</th></tr></thead>
+    <tbody>
+      <tr><td>דפי דמות ותמונות מפתח</td><td><b>Nano Banana Pro</b> (בתוך Higgsfield או ב-Gemini)</td><td>מקבל עד 14 תמונות רפרנס בבת אחת, ושומר זהות טוב. עורך תמונה קיימת בלי להרוס אותה ("תזיז את הכלב שמאלה"). Higgsfield עצמם ממליצים עליו לבניית פריימים לפני האנימציה.</td><td>GPT Image (ChatGPT). Soul ID של Higgsfield לא מתאים כאן: הוא מיועד לאנשים פוטוריאליסטיים ומבקש תמונות בלי משקפי שמש.</td></tr>
+      <tr><td>אנימציה (תמונה ← וידאו)</td><td><b>Seedance 2.0</b></td><td>מקבל עד 9 תמונות, 3 סרטונים ו-3 קבצי אודיו כרפרנס בג'נרציה אחת, כך שהתינוקת ושני הכלבים נכנסים יחד. לפי כמה השוואות מ-2026 הוא שומר סגנון מצויר עקבי בין ג'נרציות נפרדות טוב יותר מהאחרים.</td><td><b>Kling 3.0</b>: חזק ברצף של כמה שוטים בקליפ אחד (עד 6). להשוואה בכל שוט קשה (תנועת כלבים, ריצה). Veo 3.1 לקלוז-אפים מפורטים.</td></tr>
+      <tr><td>קריינות</td><td><b>האבא בטלפון</b>, בחדר שקט עם שמיכה מאחור</td><td>עברית טבעית, רגש אמיתי, בלי עלות, והלקוח מרגיש שזה שלו.</td><td>ElevenLabs עם מודל <b>Eleven v3</b>: תומך בעברית ובתגיות רגש כמו [whispers] ו-[laughs]. רישיון מסחרי בכל תוכנית בתשלום (מ-Starter, כ-$6). לפי ביקורות, בעברית הוא עדיף על Fish Audio. חובה לבדוק לפני שמתחייבים.</td></tr>
+      <tr><td>מוזיקה ושיר פתיחה</td><td><b>Suno Pro/Premier</b></td><td>שיר פתיחה של 8 שניות ומוטיב חוזר בעברית. <b>רק שירים שנוצרו בזמן מנוי בתשלום הם מסחריים.</b> שיר מהתוכנית החינמית לא הופך למסחרי גם אם משדרגים אחר כך.</td><td>ElevenLabs Music: יש רישיון ייעודי לרשתות חברתיות.</td></tr>
+      <tr><td>אפקטים (SFX)</td><td>ElevenLabs Sound Effects / ספריית CapCut</td><td>"פוף", נביחה, רוח, ציוץ</td><td>Epidemic Sound</td></tr>
+      <tr><td>עריכה</td><td><b>Remotion</b>: עריכה בקוד, Claude עורך בשבילך</td><td>לא צריך לדעת לערוך. מתארים במילים, Claude כותב את העריכה ומרנדר MP4. קריינות, מוזיקה עם ducking, כתוביות עברית, צבע וגריין אחידים, והכול ניתן לשחזור לכל פרק.</td><td>HyperFrames (HeyGen) לגרפיקות: פתיח, לוגו, כרטיס סיום. CapCut כגיבוי ידני.</td></tr>
+      <tr><td>שדרוג איכות (לא חובה)</td><td>Topaz Video / Upscale שבתוך Higgsfield</td><td>מ-720p ל-4K ומילוי פריימים.</td><td>—</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Higgsfield מול fal.ai</h3>
+  <div class="grid2">
+    <div class="card">
+      <h4>Higgsfield <span class="pill go">ללכת על זה</span></h4>
+      <ul>
+        <li>ממשק ויזואלי, וכל המודלים (Seedance, Kling, Veo, Nano Banana) במנוי אחד.</li>
+        <li><b>Unlimited לפי הדף הרשמי שלהם:</b> בתוכניות Plus ו-Ultra <b>השנתיות</b> יש סט מודלים ללא הגבלה ל-365 יום. המודלים החדשים והחזקים ביותר הם ללא הגבלה רק בחלונות מבצע של כ-7 ימים. קליפ עד 15 שניות, וג'נרציה אחת בכל פעם.</li>
+        <li><b>תוכניות</b> (משתנות הרבה, לבדוק ביום הרכישה): Starter $19 (270 קרדיטים), <b>Plus כ-$47 לחודש בשנתי / כ-$59 חודשי (1,200 קרדיטים)</b>, Ultra כ-$99 בשנתי (3,000). לפי מקור צד שלישי מספטמבר 2026, קליפ Seedance 2.0 של 5 שניות ב-1080p עולה כ-45 קרדיטים. כלומר ב-Plus יש כ-26 קליפים בתשלום בחודש, בנוסף למה שכלול ב-Unlimited.</li>
+        <li><b>Plus שנתי מספיק לפיילוט ו-2 פרקים</b>. לפני שמשלמים: צלם מסך של רשימת המודלים שב-Unlimited.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>fal.ai <span class="pill alt">לא עכשיו</span></h4>
+      <ul>
+        <li>fal.ai הוא לא "לא שווה". הוא <b>כלי למפתחים</b>: API, תשלום לפי שנייה ובלי ממשק נוח לעבודה יצירתית.</li>
+        <li>מחירי fal לפי השוואה מספטמבר 2026: Seedance 2.0 כ-$0.24 לשנייה, Kling 3.0 כ-$0.22 לשנייה (בלי אודיו), Veo 3.1 כ-$0.40 לשנייה. פרק של 60 שניות עם 3 ניסיונות לשוט יעלה כ-$40–70 רק על וידאו.</li>
+        <li><b>יתרון אמיתי אחד:</b> לפי תנאי עיבוד הנתונים שלהם, fal לא מאמנת על התוכן שלכם. זה רלוונטי לתמונות של הילדה (ראו פרטיות).</li>
+        <li>הוא הגיוני אם בעתיד תבנה אוטומציה שמפיקה עשרות פרקים. בפיילוט אין בו צורך.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>עלות חודש ראשון (הערכה)</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>פריט</th><th>הערות</th><th>דולר לחודש</th></tr></thead>
+    <tbody>
+      <tr><td>Higgsfield Plus</td><td>הבית של כל התמונות והווידאו</td><td class="num">~59</td></tr>
+      <tr><td>Suno Pro</td><td>שיר פתיחה ומוזיקת רקע, רישיון מסחרי</td><td class="num">~10</td></tr>
+      <tr><td>Remotion + HyperFrames</td><td>קוד פתוח. Remotion חינמי ליחיד או לחברה של עד 3 עובדים</td><td class="num">0</td></tr>
+      <tr><td>ElevenLabs Starter/Creator</td><td>רק אם לא האבא מקריין; SFX</td><td class="num">0–22</td></tr>
+      <tr><th>סה"כ</th><th>בדוק מחירים ביום הקנייה</th><th class="num">~70–100</th></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ============ LOCK ============ -->
+<section id="lock">
+  <h2>השיטה לשמירת דמויות</h2>
+  <p class="kicker">הכלל החשוב בפרויקט: <b>הדמות היא קובץ, לא תיאור.</b> מייצרים פעם אחת דף דמות מושלם, ומאותו רגע כל שוט מקבל את הקובץ הזה כרפרנס.</p>
+  <ol>
+    <li><b>מבחן סגנון:</b> תמונה אחת של הבוסית עם שני הכלבים בחצר, פעם בתלת-ממד ופעם בדו-ממד. הלקוח בוחר. <b>מאותו רגע לא מחליפים סגנון.</b></li>
+    <li><b>דף דמות לכל דמות:</b> חזית, ¾, צד, גב ו-6 הבעות על רקע אפור נקי. מייצרים 8–12 גרסאות ובוחרים <b>אחת</b>.</li>
+    <li><b>תיקונים</b> על הגרסה שנבחרה בעזרת עריכה ("תקן את צבע הקולר לוורוד"), לא בג'נרציה מחדש.</li>
+    <li><b>נעילה:</b> שומרים בשם <span class="ltr">BABY_sheet_v1_APPROVED.png</span> ושולחים ללקוח לאישור בכתב. <b>מכאן לא משתמשים יותר בתמונות האמיתיות של הילדה</b>, רק בדף המאושר. זה שומר עקביות וגם מקטין את כמות התמונות האמיתיות שעולות לכלים.</li>
+    <li><b>דפי לוקיישן:</b> חצר (רגילה + גרסת ג'ונגל), בריכה, סלון.</li>
+    <li><b>DNA טקסטואלי:</b> פסקה קבועה לכל דמות (בפרומפטים למטה), שמודבקת <b>כמו שהיא</b> בכל פרומפט, בלי לנסח מחדש.</li>
+    <li><b>כל שוט = תמונת מפתח קודם.</b> מייצרים את הפריים הראשון עם הרפרנסים, מאשרים, ורק אז מנפישים. אף פעם לא וידאו מטקסט בלבד.</li>
+    <li><b>שוט רצוף:</b> כששוט ממשיך את הקודם, לוקחים את הפריים האחרון שלו (צילום מסך מ-CapCut) כפריים פתיחה של הבא.</li>
+    <li><b>מקסימום 2 דמויות זזות בשוט.</b> שלוש כבר מעלות הרבה את הסיכוי לבלבול זהויות.</li>
+    <li><b>כלל עצירה:</b> אחרי 4 ניסיונות כושלים לשוט, לא ממשיכים לנסות. מפשטים את הפעולה, מחליפים מודל (Seedance ↔ Kling) או מפרקים לשני שוטים.</li>
+  </ol>
+  <h3>מבנה תיקיות (Google Drive / Dropbox)</h3>
+  <div class="prompt"><div class="bar"><span>תיקיות</span><button type="button" data-copy>העתק</button></div><pre>CoolBaby/
+  00_client/          photos from client, consent, approvals (screenshots)
+  01_style/           style tests + the ONE approved style frame
+  02_characters/      BABY_sheet_v1_APPROVED.png, DOG1_..., DOG2_..., DAD_...
+  03_locations/       YARD, YARD_JUNGLE, POOL, LIVINGROOM
+  EP01_hat/
+    keyframes/        SH01_v1.png, SH01_v2.png ...
+    video/            SH01_seedance_v1.mp4 ...
+    audio/            narration.wav, music.mp3, sfx/
+    edit/             CapCut project
+    export/           EP01_final_9x16.mp4, cover.jpg
+  EP02_.../
+  prompts.txt         every prompt that worked</pre></div>
+</section>
+
+<!-- ============ PROMPTS ============ -->
+<section id="prompts">
+  <h2>פרומפטים להעתקה</h2>
+  <p class="kicker">הפרומפטים באנגלית כי המודלים מבינים אותה הכי טוב. מלא כאן את השמות והסגנון, והם יתעדכנו בכל הפרומפטים בדף.</p>
+
+  <div class="settings">
+    <b>הגדרות לפרומפטים</b>
+    <div class="fields">
+      <label for="f-baby">שם/כינוי הילדה (באנגלית)<input id="f-baby" type="text" placeholder="e.g. Mia" autocomplete="off"></label>
+      <label for="f-dog1">אקיטה 1 (קולר ורוד)<input id="f-dog1" type="text" placeholder="e.g. Kuma" autocomplete="off"></label>
+      <label for="f-dog2">אקיטה 2 (קולר שחור)<input id="f-dog2" type="text" placeholder="e.g. Hachi" autocomplete="off"></label>
+      <label for="f-style">סגנון
+        <select id="f-style">
+          <option value="3d">תלת-ממד רך (מומלץ)</option>
+          <option value="2d">ספר ילדים דו-ממדי</option>
+        </select>
+      </label>
+    </div>
+  </div>
+
+  <h3>0. DNA: פסקאות קבועות (לשמור ולהדביק כמו שהן)</h3>
+  <div class="prompt"><div class="bar"><span>STYLE DNA</span><button type="button" data-copy>העתק</button></div><pre data-tpl>{STYLE}</pre></div>
+  <div class="prompt"><div class="bar"><span>BABY DNA</span><button type="button" data-copy>העתק</button></div><pre data-tpl>{BABY_DNA}</pre></div>
+  <div class="prompt"><div class="bar"><span>DOG 1 DNA</span><button type="button" data-copy>העתק</button></div><pre data-tpl>{DOG1_DNA}</pre></div>
+  <div class="prompt"><div class="bar"><span>DOG 2 DNA</span><button type="button" data-copy>העתק</button></div><pre data-tpl>{DOG2_DNA}</pre></div>
+  <div class="prompt"><div class="bar"><span>DAD DNA</span><button type="button" data-copy>העתק</button></div><pre data-tpl>{DAD_DNA}</pre></div>
+
+  <h3>1. מבחן סגנון (להראות ללקוח)</h3>
+  <p>מצרפים: 3 תמונות אמיתיות של הילדה (הכובע, הבריכה, ישיבה) + תמונת הכלבים בחצר. מריצים פעם עם כל אחד משני הסגנונות.</p>
+  <div class="prompt"><div class="bar"><span>Nano Banana Pro · style test</span><button type="button" data-copy>העתק</button></div><pre data-tpl>Create a single hero image for a children's animated series, based on the attached reference photos (the baby girl and her two Akita dogs are real; keep them recognizable).
+
+STYLE: {STYLE}
+
+CHARACTERS:
+{BABY_DNA}
+{DOG1_DNA}
+{DOG2_DNA}
+
+SCENE: {BABY} sits cross-legged on bright green artificial turf in a sunny backyard with white panel walls, hands on her knees, looking straight at camera like a calm little boss. {DOG1} sits on her left and {DOG2} on her right, both huge next to her (sitting, their heads are far above hers), like two loyal bodyguards. Low camera at the baby's eye level.
+
+Vertical 9:16, clean uncluttered background, soft warm afternoon light, no text, no logos.</pre></div>
+
+  <h3>2. דף דמות: הילדה</h3>
+  <p>מצרפים: 4–6 תמונות אמיתיות (לפחות אחת בלי משקפיים שבה רואים את העיניים) + תמונת הסגנון שאושרה.</p>
+  <div class="prompt"><div class="bar"><span>Nano Banana Pro · character sheet</span><button type="button" data-copy>העתק</button></div><pre data-tpl>Using the attached photos of the same baby girl and the attached approved style frame, create a professional CHARACTER MODEL SHEET for an animated series.
+
+STYLE: {STYLE}
+
+CHARACTER: {BABY_DNA}
+
+LAYOUT (plain light-gray background, even soft lighting, small English labels only):
+Row 1 – full body turnaround, sitting cross-legged: FRONT, 3/4 LEFT, SIDE PROFILE, BACK.
+Row 2 – head close-ups, 6 expressions: calm cool boss, big laugh, surprised, curious, sleepy, determined.
+Row 3 – accessories: sunglasses on, sunglasses slid down the nose (eyes peeking over), sunglasses off, with gingham hat, without hat.
+
+RULES: identical proportions, colors and outfit in every view. Keep her real face recognizable (round face, full cheeks, dark eyes, dark side fringe). No extra accessories, no text besides labels.</pre></div>
+
+  <h3>3. דף דמות: כל כלב (מריצים פעמיים)</h3>
+  <p>מצרפים: תמונת הכלבים + תמונות נוספות של אותו כלב לבד. בפעם השנייה מחליפים את DOG1 ב-DOG2.</p>
+  <div class="prompt"><div class="bar"><span>Nano Banana Pro · dog sheet</span><button type="button" data-copy>העתק</button></div><pre data-tpl>Using the attached photos, create a CHARACTER MODEL SHEET for this dog as a character in a children's animated series.
+
+STYLE: {STYLE}
+
+CHARACTER: {DOG1_DNA}
+IMPORTANT: this is a large Japanese AKITA, not a Shiba Inu – big, heavy-boned, very thick fluffy double coat, broad bear-like head, curled tail over the back.
+
+LAYOUT (plain light-gray background, small English labels only):
+Row 1 – SITTING front, SITTING side, STANDING side, WALKING 3/4.
+Row 2 – head expressions: happy open-mouth smile with tongue, head tilt curious, alert ears up, sleepy, proud.
+Row 3 – SCALE REFERENCE: the dog sitting next to the baby character from the attached sheet (the baby reaches only to the dog's chest).
+
+Same proportions, markings and collar in every view. No text besides labels.</pre></div>
+
+  <h3>4. דף דמות: האבא</h3>
+  <p>מצרפים: האיור (תמונה 1) + תמונה אמיתית שלו אם יש.</p>
+  <div class="prompt"><div class="bar"><span>Nano Banana Pro · dad sheet</span><button type="button" data-copy>העתק</button></div><pre data-tpl>Using the attached references, create a CHARACTER MODEL SHEET for the dad in a children's animated series.
+
+STYLE: {STYLE}
+
+CHARACTER: {DAD_DNA}
+
+LAYOUT (plain light-gray background): FRONT, 3/4, SIDE, BACK standing; row 2: expressions – warm smile, laughing, asleep and snoring with open mouth, surprised, whispering "shhh". Same proportions everywhere, no text besides labels.</pre></div>
+
+  <h3>5. לוקיישנים</h3>
+  <div class="prompt"><div class="bar"><span>Nano Banana Pro · locations (run each separately)</span><button type="button" data-copy>העתק</button></div><pre data-tpl>STYLE: {STYLE}
+Create an EMPTY background (no characters) for an animated series, vertical 9:16, based on the attached photo:
+
+[YARD] A sunny backyard: bright green artificial turf, tall smooth white panel walls, a sandy corner with a big sandstone rock and a low wooden bench, blue sky with soft white clouds, warm afternoon light.
+
+[YARD_JUNGLE] The SAME backyard transformed into a magical jungle as seen through a baby's imagination: the turf becomes giant soft grass, the white walls become tall pale cliffs with vines, the sandstone rock becomes a small mountain, huge friendly flowers, glowing warm light. Keep the same layout and camera position as the YARD image so the two can be crossfaded.
+
+[POOL] A backyard swimming pool with bright turquoise water, sparkling light caustics, a blue inflatable swim ring decorated with small white stars (no logos, no characters on it).
+
+[LIVINGROOM] A cozy living room: light-gray textured sofa with cream cushions, wooden side table with a glowing candle, a framed picture and a leafy potted plant, warm lamp light through sheer curtains.</pre></div>
+
+  <h3>6. תמונת מפתח לשוט (תבנית)</h3>
+  <p>מצרפים: דפי הדמויות שבשוט + הלוקיישן. ממלאים את הסוגריים המרובעים לפי השוט ליסט.</p>
+  <div class="prompt"><div class="bar"><span>Nano Banana Pro · keyframe template</span><button type="button" data-copy>העתק</button></div><pre data-tpl>Create one frame of an animated series. Use the attached character sheets and background EXACTLY – same faces, proportions, colors, outfits and collars.
+
+STYLE: {STYLE}
+
+SHOT: [SHOT TYPE – e.g. low-angle medium shot at the baby's eye level]
+LOCATION: [YARD / YARD_JUNGLE / POOL / LIVINGROOM – from attached background]
+ACTION (frozen moment): [e.g. {BABY} sits cross-legged, one hand lifting her bear sunglasses, eyebrows raised]
+{DOG1}: [position + pose, e.g. sitting on her left, head tilted]
+{DOG2}: [position + pose, e.g. sitting on her right, looking off-screen]
+MOOD / LIGHT: [e.g. warm golden afternoon, playful]
+
+Vertical 9:16. Main subject in the center third, leave space at the bottom for captions. No text, no logos, no extra characters. Do not change any character design.</pre></div>
+
+  <h3>7. אנימציה של השוט (Seedance 2.0 / Kling 3.0)</h3>
+  <p>מעלים את תמונת המפתח כפריים ראשון, ובנוסף את דפי הדמויות כרפרנס (ב-Seedance יש מקום לכמה). משך 4–6 שניות. <b>סאונד כבוי</b>: את כל הסאונד מוסיפים בעריכה.</p>
+  <div class="prompt"><div class="bar"><span>Seedance 2.0 · image-to-video template</span><button type="button" data-copy>העתק</button></div><pre data-tpl>Animate the start frame. Duration: 5 seconds. Vertical 9:16.
+
+ACTION (one or two clear beats only):
+[e.g. {BABY} slowly slides her bear sunglasses down her nose with one finger and looks straight into the camera. After a beat, {DOG1} tilts his head and his tongue flops out.]
+
+CAMERA: [static locked camera / slow push-in / gentle low tracking shot following the action]
+TIMING: animated-feature cartoon timing – clear anticipation, soft weight, small overshoot, then a short hold at the end.
+
+KEEP: the exact character designs, outfit, collars, colors and background from the start frame and the attached references.
+AVOID: morphing, face changes, extra limbs or fingers, new characters, text, logos, flicker, fast shaky camera.</pre></div>
+
+  <div class="note tip"><b class="tag">טיפים לאנימציה</b>
+    <ul>
+      <li>פעולה אחת או שתיים בשוט. "היא מרימה משקפיים ואז מחייכת" עובד. רשימה של חמש פעולות לא עובדת.</li>
+      <li>כלבים: לתאר תנועה עדינה (הטיית ראש, לשון, זנב, אוזניים). ריצה של כלב ענק היא שוט "קשה", ועדיף לנסות אותו גם ב-Kling.</li>
+      <li>מעבר לעולם הדמיוני: לא מבקשים מהמודל לעשות אותו. מנפישים שוט בחצר ושוט באותה זווית בג'ונגל, ועושים ביניהם crossfade עם ברק או נצנוץ ב-CapCut. זה זול ויציב.</li>
+      <li>מייצרים 2–4 גרסאות לכל שוט ובוחרים. זה נורמלי ומתוכנן בתקציב.</li>
+    </ul>
+  </div>
+
+  <h3>8. תסריט ושוט ליסט (ל-Claude או ChatGPT)</h3>
+  <p>אחרי שהלקוח בחר עלילה, מדביקים את זה עם העלילה שלו:</p>
+  <div class="prompt"><div class="bar"><span>Script prompt</span><button type="button" data-copy>העתק</button></div><pre data-tpl>You are a head writer for short-form preschool animation (think Bluey-level warmth and comic timing, but original).
+
+SERIES: "Cool Baby" – {BABY}, a ~10-month-old baby who doesn't talk yet but is the calmest little boss in the world, and her two giant Akita dogs: {DOG1} (pink collar – goofy, over-excited, always smiling) and {DOG2} (black collar – serious, careful, secretly soft). RULE OF THE SHOW: when {BABY} puts on her bear-ear sunglasses, the ordinary world turns into a big imaginary adventure; when she takes them off, we are back in reality and the "huge" problem turns out to be tiny.
+
+FORMAT: vertical 9:16, 55–70 seconds, 12–14 shots, each 3–6 seconds. No character dialogue at all – the baby communicates only with expressions and gestures; the dogs with dog behavior. One Hebrew narrator (the dad), warm and funny, max 8 short lines total. Very strong hook in the first 2 seconds. Ending that loops back to the first shot if possible.
+
+EPISODE IDEA: [paste the client's chosen plot here]
+
+WRITE:
+1. Title in Hebrew + English.
+2. Logline (one sentence).
+3. A shot list table with columns: #, seconds, shot type & camera, location, what we see (action, max 2 beats), narration line in Hebrew (or "—"), sound effects, music cue.
+4. Max 2 moving characters per shot. Visual comedy through reactions and timing, not chaos. No scary moments, no danger to the baby near water or heights.
+5. A 1-line social caption in Hebrew + 5 hashtags.</pre></div>
+
+  <h3>9. מוזיקה (Suno)</h3>
+  <div class="prompt"><div class="bar"><span>Suno · theme song</span><button type="button" data-copy>העתק</button></div><pre data-tpl>Style: playful ukulele and xylophone kids theme, light bossa groove, finger snaps, 105 bpm, warm and cool at the same time, short and catchy, Hebrew female-child-friendly vocals.
+
+Lyrics (Hebrew, 8 seconds jingle):
+[Intro]
+משקפיים על האף…
+[Hook]
+היא הבוסית! (ווף ווף!)
+הבוסית במשקפיים!</pre></div>
+  <div class="prompt"><div class="bar"><span>Suno · background underscore</span><button type="button" data-copy>העתק</button></div><pre data-tpl>Instrumental. Playful adventurous kids underscore, pizzicato strings, marimba, soft jungle percussion, builds gently then resolves, 60 seconds, no vocals, leaves space for a narrator voice.</pre></div>
+
+  <h3>10. הנחיות קריינות לאבא (לשלוח לו)</h3>
+  <div class="prompt"><div class="bar"><span>הודעה ללקוח</span><button type="button" data-copy>העתק</button></div><pre class="he">היי! הנה השורות לקריינות של הפרק 🙂
+איך מקליטים:
+• בחדר קטן עם הרבה בדים (ארון בגדים פתוח זה מושלם), טלפון במרחק כף יד מהפה, מצב טיסה.
+• כל שורה 3 פעמים: רגיל, יותר מחייך, יותר דרמטי (כמו קריין של סרט טבע).
+• 2 שניות שקט לפני ואחרי כל שורה.
+• לשלוח כקובץ (לא הודעה קולית בוואטסאפ, היא דוחסת את האיכות). אפשר דרך אפליקציית ההקלטות, "שתף כקובץ".
+
+השורות:
+1. …
+2. …</pre></div>
+</section>
+
+<!-- ============ SHOTS ============ -->
+<section id="shots">
+  <h2>שוט ליסט לדוגמה: פיילוט א' "הכובע שעף"</h2>
+  <p class="kicker">כ-62 שניות, 12 שוטים. אם הלקוח בוחר עלילה אחרת, פרומפט 8 מייצר טבלה באותו מבנה.</p>
+  <div class="tbl"><table class="shot">
+    <thead><tr><th>#</th><th>שניות</th><th>שוט</th><th>מה רואים</th><th>קריינות (האבא)</th><th>סאונד</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td class="num">0–3</td><td>קלוז-אפ קיצוני</td><td>משקפי הדובי מחליקים לאט על האף, העיניים מציצות ישר למצלמה. <b>ההוק.</b></td><td data-tpl>"תכירו את {BABY}. בת עשרה חודשים."</td><td>ביט מוזיקה נעצר</td></tr>
+      <tr><td>2</td><td class="num">3–7</td><td>רחב, זווית נמוכה</td><td>היא יושבת ברגליים משוכלות בין שני האקיטות הענקיים, כמו על כס מלכות.</td><td>"והיא… הבוס."</td><td>שיר הפתיחה (8 ש')</td></tr>
+      <tr><td>3</td><td class="num">7–11</td><td>בינוני</td><td>משב רוח. כובע הדובדבן מתרומם ועף מחוץ לפריים.</td><td>—</td><td>רוח, "פוּף"</td></tr>
+      <tr><td>4</td><td class="num">11–15</td><td>קלוז-אפ</td><td>היא מורידה משקפיים לאט. מבט של "אתם רציניים?"</td><td>"אוי. לא. הכובע."</td><td>שקט קומי</td></tr>
+      <tr><td>5</td><td class="num">15–19</td><td>שוט כפול של הכלבים</td><td data-tpl>{DOG1} מתלהב ומסתכל על {DOG2}. {DOG2} מהנהן ברצינות.</td><td>—</td><td>נביחה קצרה</td></tr>
+      <tr><td>6</td><td class="num">19–24</td><td>בינוני ← מעבר</td><td>היא מרכיבה את המשקפיים. נצנוץ, והחצר הופכת לג'ונגל (crossfade בין שתי תמונות מאותה זווית).</td><td>"כשהמשקפיים עולים…"</td><td>"שווש" קסום, תופי ג'ונגל</td></tr>
+      <tr><td>7</td><td class="num">24–30</td><td>מעקב נמוך (שוט הוואו)</td><td data-tpl>{BABY} רוכבת על הגב של {DOG1} בין עשבים ענקיים, יד אחת מורמת קדימה.</td><td>"…מתחילה משימה."</td><td>מוזיקת הרפתקה</td></tr>
+      <tr><td>8</td><td class="num">30–35</td><td>בינוני</td><td data-tpl>{DOG2} מרחרח את הקרקע כמו בלש, אוזניים זקופות.</td><td>—</td><td>רחרוח</td></tr>
+      <tr><td>9</td><td class="num">35–41</td><td>רחב</td><td>על ה"הר" (הסלע) יושבת ציפור צהובה קטנה וחובשת את הכובע, גדול עליה פי עשרה.</td><td>"חשוד מספר אחת."</td><td>ציוץ</td></tr>
+      <tr><td>10</td><td class="num">41–48</td><td>שוט/נגד-שוט</td><td>עימות שקט: הבוסית מול הציפור. היא שולפת חצי ביסקוויט ומושיטה אותו.</td><td>"היא לא מתווכחת. היא מנהלת משא ומתן."</td><td>מוזיקת מערבון קצרה</td></tr>
+      <tr><td>11</td><td class="num">48–55</td><td>בינוני</td><td>הכובע חוזר לראש. היא מורידה משקפיים, חזרה לחצר הרגילה. הכלבים מתנשפים בגאווה.</td><td>"משימה הושלמה."</td><td>"פינג" + חזרה לשיר</td></tr>
+      <tr><td>12</td><td class="num">55–62</td><td>רחב ← לוגו</td><td>שלושתם מסובבים ראש ביחד כששומעים שקית נפתחת מחוץ לפריים. כרטיס שם הסדרה.</td><td>"…במבה?"</td><td>רשרוש שקית, סיום השיר</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>פרקים 2 ו-3 (אחרי הפיילוט, באותם נכסים)</h3>
+  <div class="grid2">
+    <div class="card"><h4>פרק 2: "הבוסית והים"</h4><p data-tpl>הבריכה הופכת לאוקיינוס והגלגל לספינה. {DOG1} קופץ למים, {DOG2} שומר מהחוף. דג קטן ואבוד. בסוף: הדג היה צעצוע אמבטיה.</p><p class="sub">חדש: לוקיישן בריכה ודמות הדג. הכלבים והילדה ממוחזרים.</p></div>
+    <div class="card"><h4>פרק 3: "שנ"צ של אבא"</h4><p>הספה נהיית ממלכת עננים והנחירות של אבא הן הר רועם. הכלבים מבצעים "מבצע שקט" כדי להגיע לבקבוק.</p><p class="sub">חדש: הסלון ואבא. כאן בודקים 3–4 דמויות, אחרי שהשיטה כבר הוכחה.</p></div>
+  </div>
+</section>
+
+<!-- ============ EDIT ============ -->
+<section id="edit">
+  <h2>עריכה ברמה גבוהה, בלי לדעת לערוך</h2>
+  <p class="kicker">הרבה מהאיכות נקבעת כאן. יש הרבה סרטוני AI יפים ומשעממים, וההבדל הוא בקצב ובסאונד. העריכה נעשית בקוד עם Remotion: אתה מביא חומרים ונותן הערות במילים, ו-Claude עורך ומרנדר.</p>
+  <h3>איך זה עובד</h3>
+  <ol>
+    <li><b>אתה:</b> שם את הקליפים הנבחרים בתיקייה בשמות לפי השוט ליסט (<span class="ltr">SH01.mp4, SH02.mp4…</span>), יחד עם <span class="ltr">narration.wav</span>, <span class="ltr">music.mp3</span> והלוגו.</li>
+    <li><b>Claude:</b> ממלא את קובץ הפרק (סדר, חיתוכים, מעברים, כתוביות, אפקטים) ומרנדר טיוטה אנכית.</li>
+    <li><b>אתה:</b> צופה ונותן הערות במילים, עם זמנים אם אפשר: "בשנייה 0:12 השוט ארוך מדי", "הכתוביות קטנות".</li>
+    <li><b>Claude:</b> מתקן ומרנדר שוב. פרק 2 משתמש באותה תבנית, ולכן הוא הרבה יותר מהיר.</li>
+  </ol>
+  <div class="prompt"><div class="bar"><span>הודעה ל-Claude לעריכת פרק</span><button type="button" data-copy>העתק</button></div><pre class="he">תערוך את פרק EP01 בתבנית Remotion של הסדרה.
+הקבצים בתיקייה EP01_hat/ (קליפים SH01–SH12, narration.wav, music.mp3).
+השוט ליסט המאושר: [להדביק את הטבלה]
+דגשים: הוק חזק ב-1.5 שניות הראשונות, חיתוך על תנועה, ducking למוזיקה מתחת לקריינות, כתוביות עברית 2–4 מילים, גריין עדין, סוף שמתחבר להתחלה.
+תרנדר טיוטה 1080x1920 ותשלח לי.</pre></div>
+  <h3>העקרונות שהעריכה עושה</h3>
+  <div class="grid2">
+    <div class="card"><h4>קצב</h4><ul>
+      <li>ההוק ב-1.5 השניות הראשונות: תנועה, פנים ומבט למצלמה. בלי לוגו בהתחלה.</li>
+      <li>שוט ממוצע 2.5–4 שניות. חותכים את ההתחלה האיטית של כל קליפ AI, שבה כמעט תמיד חצי שנייה "קפואה".</li>
+      <li>חותכים על תנועה (cut on action): היד מתחילה לזוז בשוט אחד וממשיכה בשוט הבא.</li>
+      <li>אחרי בדיחה משאירים חצי שנייה של שקט, ורק אז ממשיכים.</li>
+    </ul></div>
+    <div class="card"><h4>סאונד (חצי מהחוויה)</h4><ul>
+      <li>3 שכבות: קריינות, מוזיקה ו-SFX. כשיש קריינות המוזיקה יורדת ב-8–10dB (ducking, מובנה בתבנית).</li>
+      <li>SFX לכל תנועה חשובה: משקפיים (קליק), כובע (פוף), צעדי כלב, רוח.</li>
+      <li>J-cut: הסאונד של השוט הבא מתחיל חצי שנייה לפניו.</li>
+      <li>Loudness סופי כ-14- LUFS, רמה מקובלת לרשתות.</li>
+    </ul></div>
+    <div class="card"><h4>מראה אחיד</h4><ul>
+      <li>פילטר צבע אחד קבוע לכל הסדרה (שומרים כ-preset).</li>
+      <li>גריין עדין (5–10%) על הכול. זה "מדביק" קליפים ממודלים שונים.</li>
+      <li>שדרוג ל-1080×1920 לפחות, 30fps.</li>
+    </ul></div>
+    <div class="card"><h4>כתוביות וסיום</h4><ul>
+      <li>כתוביות עברית גדולות, 2–4 מילים בכל פעם, פונט עגול, קו מתאר. נשארות בתוך האזור הבטוח ולא בתחתית ממש, כי שם יושבים הכפתורים של אינסטגרם.</li>
+      <li>קובץ נוסף עם כתוביות באנגלית לקהל בינלאומי.</li>
+      <li>סוף שמתחבר להתחלה, כדי שהצפייה תתחיל שוב (לופ).</li>
+      <li>תמונת קאבר: פני הבוסית עם משקפיים + 2–3 מילים.</li>
+    </ul></div>
+  </div>
+</section>
+
+<!-- ============ STAGES ============ -->
+<section id="stages">
+  <h2>לוח זמנים: מא' עד ת'</h2>
+  <p class="kicker">סמן מה סיימת. הסימון נשמר בדפדפן שלך בלבד.</p>
+  <div class="stages" id="stage-list">
+    <label class="stage"><input type="checkbox" id="s1"><div><div class="when">יום 0</div><div class="t"><b>שיחה עם הלקוח:</b> 10 השאלות, בחירת עלילה, תמונות נוספות, אישור בכתב.</div></div></label>
+    <label class="stage"><input type="checkbox" id="s2"><div><div class="when">יום 1</div><div class="t"><b>מנויים:</b> Higgsfield Plus (לבדוק מבצעי Unlimited), Suno. לפתוח את מבנה התיקיות.</div></div></label>
+    <label class="stage"><input type="checkbox" id="s3"><div><div class="when">יום 1–2</div><div class="t"><b>מבחן סגנון:</b> פרומפט 1 בשני הסגנונות. שולחים ללקוח, הוא בוחר. <span class="pill no">שער 1</span></div></div></label>
+    <label class="stage"><input type="checkbox" id="s4"><div><div class="when">יום 2–4</div><div class="t"><b>דפי דמות:</b> פרומפטים 2–4 ולוקיישנים (5). לאשר בכתב. מכאן אין שינויי עיצוב. <span class="pill no">שער 2</span></div></div></label>
+    <label class="stage"><input type="checkbox" id="s5"><div><div class="when">יום 4</div><div class="t"><b>מבחן עקביות:</b> 5 שוטים של הילדה בזוויות שונות + 2 שוטים עם הכלבים. אם 4 מתוך 5 נראים אותה דמות, ממשיכים. אם לא, מתקנים את דף הדמות.</div></div></label>
+    <label class="stage"><input type="checkbox" id="s6"><div><div class="when">יום 5</div><div class="t"><b>תסריט ושוט ליסט:</b> פרומפט 8, ליטוש ידני ואישור לקוח. <span class="pill no">שער 3</span></div></div></label>
+    <label class="stage"><input type="checkbox" id="s7"><div><div class="when">יום 5–7</div><div class="t"><b>תמונות מפתח לכל 12 השוטים</b> (פרומפט 6). שמים אותן ב-CapCut עם קריינות זמנית (אנימטיק), ורואים אם הסיפור עובד לפני שמשלמים על וידאו.</div></div></label>
+    <label class="stage"><input type="checkbox" id="s8"><div><div class="when">יום 7</div><div class="t"><b>הקלטת קריינות</b> של האבא (הודעה 10).</div></div></label>
+    <label class="stage"><input type="checkbox" id="s9"><div><div class="when">יום 7–9</div><div class="t"><b>אנימציה</b> (פרומפט 7): 2–4 גרסאות לשוט. את השוטים הקשים מנסים גם ב-Kling.</div></div></label>
+    <label class="stage"><input type="checkbox" id="s10"><div><div class="when">יום 9</div><div class="t"><b>מוזיקה ו-SFX</b> (פרומפט 9).</div></div></label>
+    <label class="stage"><input type="checkbox" id="s11"><div><div class="when">יום 10–11</div><div class="t"><b>עריכה ב-Remotion:</b> Claude מרנדר טיוטה, אתה נותן הערות, 1–2 סבבים. גרסה אנכית + קאבר.</div></div></label>
+    <label class="stage"><input type="checkbox" id="s12"><div><div class="when">יום 12</div><div class="t"><b>סבב תיקונים אחד</b> עם הלקוח: רשימה מסודרת עם זמנים, לא הודעות בודדות. <span class="pill no">שער 4</span> ואז פרסום.</div></div></label>
+    <label class="stage"><input type="checkbox" id="s13"><div><div class="when">שבוע 3</div><div class="t"><b>פרקים 2–3</b> באותם נכסים. אם פרק 2 לוקח חצי מהזמן של הפיילוט, השיטה עובדת.</div></div></label>
+  </div>
+</section>
+
+<!-- ============ PUBLISH ============ -->
+<section id="publish">
+  <h2>פרסום ופרטיות</h2>
+  <div class="grid2">
+    <div class="card"><h4>איפה ואיך</h4><ul>
+      <li><b>להתחיל ב-Instagram Reels וב-YouTube Shorts.</b> TikTok רק אחרי בדיקה (ראו האזהרה למטה).</li>
+      <li>בכל פלטפורמה מעלים ישירות, לא עם סימן מים של פלטפורמה אחרת.</li>
+      <li>ביוטיוב: לפי המדיניות הרשמית, סימון AI חובה לתוכן <b>ריאליסטי</b> ולא לאנימציה מצוירת ברורה. ב-Meta התווית "AI info" מתווספת לרוב אוטומטית. מסמנים בכל מקרה, זה לא מזיק.</li>
+      <li>ביוטיוב, סדרה על תינוקת וכלבים כמעט בוודאות תסווג "Made for Kids". זה מבטל תגובות ופרסום מותאם, וההכנסות נמוכות בהרבה. זו לא סדרה שמתכננים סביב הכנסות מיוטיוב.</li>
+      <li>קצב: הפיילוט, ואחרי שבוע פרק 2.</li>
+    </ul></div>
+    <div class="card" style="border-color:var(--cherry)"><h4>סיכון: TikTok ודמיון לקטינה אמיתית</h4><ul>
+      <li>לפי ההנחיות של TikTok, אסור תוכן AI שמכיל את ה-likeness (הדמיון החזותי) של אדם אמיתי מתחת לגיל 18, <b>גם אם מסומן כ-AI</b>.</li>
+      <li>לא ברור אם דמות מצוירת ומסוגננת "שנוצרה בהשראת" ילדה נחשבת likeness. זה אזור אפור, והסיכון הוא הורדת סרטונים או חסימת החשבון.</li>
+      <li><b>לכן:</b> לא מפרסמים "תמונה אמיתית מול מצוירת" בשום פלטפורמה. לא כותבים "זו הבת שלי בגרסת AI". הדמות מוצגת כדמות מצוירת מקורית. כדאי ללכת על סגנון מסוגנן יותר (עיניים גדולות, פרופורציות מצוירות) ולא על "העתק של התמונה".</li>
+      <li>לספר את זה ללקוח לפני שמתחילים.</li>
+    </ul></div>
+    <div class="card"><h4>פרטיות הילדה</h4><ul>
+      <li>אישור בכתב מהאב (כבר בשאלות).</li>
+      <li>כינוי במקום השם המלא, בלי מיקום, בלי שם הגן ובלי תיוג של מקומות.</li>
+      <li>תמונות אמיתיות עולות לכלי AI רק בשלב דף הדמות, ואחר כך עובדים רק מהדף המצויר.</li>
+      <li><b>Higgsfield</b> (תנאים מעודכנים מ-27.8.2026): התוכן נשאר שלכם ומותר שימוש מסחרי, אבל Higgsfield עדיין משתמשת בתוכן לשיפור המודלים. לפי ההודעה שלהם, תוכן שנמחק לא משמש יותר לאימון. <b>לכן: אחרי שדף הדמות אושר, מוחקים מהחשבון את התמונות האמיתיות של הילדה.</b></li>
+      <li><b>fal.ai</b> מצהירה בתנאי עיבוד הנתונים שלה שהיא לא מאמנת על תוכן של לקוחות. אם הלקוח רגיש לנושא, אפשר לעשות את שלב דף הדמות (Nano Banana Pro) דרך fal ואת כל השאר ב-Higgsfield.</li>
+      <li>לא לשכפל את הקול של הילדה עם AI.</li>
+    </ul></div>
+  </div>
+</section>
+
+<!-- ============ MONEY ============ -->
+<section id="money">
+  <h2>כסף, בקצרה</h2>
+  <p>החלק העסקי בתוכנית של הצ'אט טוב. הנקודות העיקריות:</p>
+  <ul>
+    <li><b>לחלק לשלושה:</b> תשלום הקמה (סגנון, דמויות, לוקיישנים), פיילוט במחיר קבוע, ופרק לפי משך.</li>
+    <li><b>כלים ומנויים על הלקוח,</b> בשקיפות.</li>
+    <li><b>1,000 ₪ לפרק</b> הגיוני רק לפרק של כדקה, <b>אחרי</b> שהנכסים קיימים, ועם סבב תיקונים אחד. את הפיילוט מתמחרים בנפרד, כי הוא לוקח פי 2–3 זמן.</li>
+    <li>אחוזים: רק כבונוס על הכנסות מוגדרות (לא "מהרווח"), ולא במקום תשלום.</li>
+    <li>למדוד בפיילוט כמה שעות לקח ובכמה ניסיונות יצא כל שוט. זה הבסיס למחיר של פרק 2 והלאה.</li>
+  </ul>
+</section>
+
+<footer>
+  מחירים ויכולות מודלים משתנים בתדירות גבוהה ב-2026. בדוק בדף התמחור הרשמי ביום הרכישה.
+  מקורות: <a href="https://higgsfield.ai/pricing" target="_blank" rel="noopener">Higgsfield Pricing</a> ·
+  <a href="https://higgsfield.ai/creator-hub/help-center/ai-models/how-do-i-create-and-use-a-soul-id-character" target="_blank" rel="noopener">Soul ID</a> ·
+  <a href="https://higgsfield.ai/blog/5-Best-AI-Video-Models-2026-Tested-Compared" target="_blank" rel="noopener">השוואת מודלי וידאו</a> ·
+  <a href="https://higgsfield.ai/blog/higgsfield-all-unlimited-explained" target="_blank" rel="noopener">Higgsfield Unlimited</a> ·
+  <a href="https://higgsfield.ai/blog/terms-of-use-privacy-policy-update" target="_blank" rel="noopener">תנאי Higgsfield 8/2026</a> ·
+  <a href="https://fal.ai/legal/data-processing-addendum" target="_blank" rel="noopener">fal DPA</a> ·
+  <a href="https://www.teamday.ai/blog/ai-api-pricing-comparison-2026" target="_blank" rel="noopener">מחירי API</a> ·
+  <a href="https://www.atlabs.ai/blog/how-to-build-a-consistent-cast-of-ai-characters-in-seedance-2.0-for-a-video-series" target="_blank" rel="noopener">צוות קבוע ב-Seedance</a> ·
+  <a href="https://elevenlabs.io/docs/overview/models" target="_blank" rel="noopener">ElevenLabs models</a> ·
+  <a href="https://suno.com/terms-of-service" target="_blank" rel="noopener">Suno ToS</a> ·
+  <a href="https://support.tiktok.com/en/using-tiktok/creating-videos/ai-generated-content" target="_blank" rel="noopener">TikTok AIGC</a> ·
+  <a href="https://blog.youtube/news-and-events/disclosing-ai-generated-content/" target="_blank" rel="noopener">YouTube AI disclosure</a> ·
+  <a href="https://support.google.com/youtube/answer/9528076" target="_blank" rel="noopener">Made for Kids</a> ·
+  <a href="https://aijourn.com/one-person-one-studio-what-4-4-million-views-reveal-about-ai-native-animation/" target="_blank" rel="noopener">4.4M views case</a> ·
+  <a href="https://carlaeng.substack.com/p/make-ai-videos-kids-guide" target="_blank" rel="noopener">Engelbrecht guide</a> ·
+  <a href="https://www.npr.org/2025/08/28/nx-s1-5493485/ai-slop-videos-youtube-tiktok" target="_blank" rel="noopener">NPR</a> ·
+  <a href="https://www.tubefilter.com/2026/07/13/youtube-inauthentic-content-monetization-policy-update/" target="_blank" rel="noopener">YouTube inauthentic 7/2026</a> ·
+  <a href="https://higgsfield.ai/blog/guide-animation-seedance2.0" target="_blank" rel="noopener">Higgsfield animation guide</a> ·
+  <a href="https://www.remotion.dev/docs/ai/skills" target="_blank" rel="noopener">Remotion skills</a> ·
+  <a href="https://github.com/heygen-com/hyperframes" target="_blank" rel="noopener">HyperFrames</a> ·
+  <a href="https://www.youtube.com/watch?v=NnvRMs_0UQ8" target="_blank" rel="noopener">הסרטון הראשון</a>
+  <br>הערה: חלק מהנתונים (מחירי קרדיטים, השוואות מודלים) מגיעים מאתרי צד שלישי ומבלוגים של ספקים, ולא אומתו מול המקור הרשמי.
+</footer>
+</div>
+
+<script>
+(function(){
+  var STYLES = {
+    "3d": "Premium 3D animated feature-film look: soft rounded shapes, gentle subsurface-scattered skin, big glossy expressive eyes, soft realistic fur grooming, warm golden key light with soft bounce, pastel-saturated colors, shallow depth of field, clean uncluttered backgrounds, cinematic composition, cozy and kid-friendly.",
+    "2d": "Hand-painted 2D storybook illustration: gouache and soft watercolor texture, clean confident brown-ink outlines, flat soft shading with a single shadow tone, warm pastel palette, visible paper grain, simple uncluttered backgrounds, cozy and kid-friendly."
+  };
+  var fields = { BABY:"f-baby", DOG1:"f-dog1", DOG2:"f-dog2" };
+  var defaults = { BABY:"[BABY]", DOG1:"[DOG1]", DOG2:"[DOG2]" };
+  var KEY = "coolbaby-plan-v1";
+  var state = {};
+  try { state = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch(e) { state = {}; }
+
+  function val(k){ var v = (state[k] || "").trim(); return v || defaults[k]; }
+  function vars(){
+    var B = val("BABY"), D1 = val("DOG1"), D2 = val("DOG2");
+    return {
+      BABY:B, DOG1:D1, DOG2:D2,
+      STYLE: STYLES[state.style || "3d"],
+      BABY_DNA: B + ": a chubby 10-month-old baby girl, round face with full rosy cheeks, big dark-brown eyes, short dark-brown hair with a soft side fringe, light olive-tan skin, tiny button nose, calm unimpressed 'cool boss' expression with a small closed-mouth smile. Signature items: round cream-white kids sunglasses with little bear ears on top of the frame, and a red-and-white gingham bucket hat with a small embroidered cherry on the front. Default outfit: pale yellow sleeveless swimsuit with white trim. Signature pose: sits cross-legged with both hands resting on her knees.",
+      DOG1_DNA: D1 + ": a large Japanese Akita (NOT a Shiba), cream-white face, chest and legs, pale ginger back and ears, very thick fluffy double coat, curled tail over the back, small upright triangular ears, dark almond eyes, big happy open-mouth smile with a pink tongue. Wears a pink leather collar with a silver buckle. Personality: goofy, over-excited gentle giant.",
+      DOG2_DNA: D2 + ": a large Japanese Akita (NOT a Shiba), rich red-fawn coat with white markings on the muzzle, cheeks, chest and legs, thick fluffy double coat, curled tail, upright triangular ears. Wears a plain black nylon collar. Personality: calm, watchful, noble bodyguard.",
+      DAD_DNA: "Dad: a man in his late 30s, short dark-brown hair styled up, full beard that is dark at the top and salt-and-pepper gray at the chin, warm brown eyes, black crewneck sweater. Relaxed and loving."
+    };
+  }
+  var tpls = Array.prototype.slice.call(document.querySelectorAll("[data-tpl]"));
+  tpls.forEach(function(el){ el._tpl = el.textContent; });
+  function render(){
+    var v = vars();
+    tpls.forEach(function(el){
+      var s = el._tpl;
+      for (var pass = 0; pass < 2; pass++) {
+        s = s.replace(/\{([A-Z0-9_]+)\}/g, function(m,k){ return (k in v) ? v[k] : m; });
+      }
+      el.textContent = s;
+    });
+  }
+  function save(){ try { localStorage.setItem(KEY, JSON.stringify(state)); } catch(e) {} }
+
+  Object.keys(fields).forEach(function(k){
+    var el = document.getElementById(fields[k]);
+    if (state[k]) el.value = state[k];
+    el.addEventListener("input", function(){ state[k] = el.value; save(); render(); });
+  });
+  var sel = document.getElementById("f-style");
+  if (state.style) sel.value = state.style;
+  sel.addEventListener("change", function(){ state.style = sel.value; save(); render(); });
+  render();
+
+  document.querySelectorAll("[data-copy]").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var pre = btn.closest(".prompt").querySelector("pre");
+      var text = pre.textContent;
+      function done(ok){
+        btn.textContent = ok ? "הועתק ✓" : "סמן והעתק ידנית";
+        setTimeout(function(){ btn.textContent = "העתק"; }, 1600);
+      }
+      function fallback(){
+        var r = document.createRange(); r.selectNodeContents(pre);
+        var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+        var ok = false; try { ok = document.execCommand("copy"); } catch(e) {}
+        done(ok);
+      }
+      try {
+        navigator.clipboard.writeText(text).then(function(){ done(true); }, fallback);
+      } catch(e) { fallback(); }
+    });
+  });
+
+  var checks = state.checks || {};
+  document.querySelectorAll("#stage-list input[type=checkbox]").forEach(function(cb){
+    var row = cb.closest(".stage");
+    cb.checked = !!checks[cb.id];
+    row.classList.toggle("done", cb.checked);
+    cb.addEventListener("change", function(){
+      checks[cb.id] = cb.checked; state.checks = checks; save();
+      row.classList.toggle("done", cb.checked);
+    });
+  });
+})();
+</script>
