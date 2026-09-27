@@ -1,0 +1,12 @@
+# Real photos/videos/audio of the child and client materials: local only
+references/photos/
+references/client/
+episodes/*/assets/
+episodes/*/export/
+*.mp4
+*.mov
+*.wav
+*.mp3
+node_modules/
+out/
+.env
